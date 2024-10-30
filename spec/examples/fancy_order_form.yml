@@ -1,0 +1,43 @@
+version: 1
+name: Fancy order form
+description: Order multiple items
+type: template 
+items:
+  - type: section
+    items:
+      - type: title
+        text: Order form
+      - type: heading
+        text: Personal details
+      - type: text
+        caption: Your name
+        required: true 
+  - type: section
+    items:
+      - type: heading
+        text: Order details
+      - type: repeating_group
+        items:
+          - type: text
+            caption: Item to order
+            required: true 
+          - type: number
+            caption: Quantity
+            required: true 
+            default: 1
+            minimum: 1
+          - type: rich_text
+            caption: Reason for order
+  - type: section
+    items:
+      - type: date 
+        caption: Date
+        required: true 
+        default: today 
+      - type: signature
+        caption: Sign here
+        required: true 
+
+
+
+

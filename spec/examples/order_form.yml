@@ -1,0 +1,30 @@
+version: 1
+name: Order form
+description: Order multiple items
+type: template 
+items:
+  - type: text
+    caption: Your name
+    required: true 
+  - type: repeating_group
+    items:
+      - type: text
+        caption: Item to order
+        required: true 
+      - type: number
+        caption: Quantity
+        required: true 
+        default: 1
+        minimum: 1
+      - type: rich_text
+        caption: Reason for order
+  - type: date 
+    caption: Date
+    required: true 
+    default: today 
+  - type: signature
+    caption: Sign here
+    required: true 
+
+
+

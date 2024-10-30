@@ -1,0 +1,14 @@
+version: 1
+name: Simple template
+description: My simple template
+type: template 
+items:
+  - type: text
+    caption: What's your name?
+    required: true 
+  - type: rich_text
+    caption: Tell me about yourself
+  - type: date 
+    caption: What's your date of birth?
+
+
