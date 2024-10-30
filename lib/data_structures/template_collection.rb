@@ -1,3 +1,5 @@
+require_relative "template"
+
 module DataStructures
   class TemplateCollection
     include Plumbing::Actor
@@ -12,11 +14,11 @@ module DataStructures
 
     def load config = {}
       config.delete(:version)
-      type = config.delete(:type) || :template
+      type = config.delete(:type)
 
       klass = await { @configuration.class_for(type) }
 
-      klass.new(config).tap do |template|
+      klass.new(**config).tap do |template|
         set template.name, template
       end
     end

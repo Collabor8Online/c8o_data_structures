@@ -17,14 +17,20 @@ module DataStructures
       @class_registrations[name.to_s] = klass
     end
 
-    def class_for(name) = @class_registrations[name.to_s]
+    def class_for(name) = @class_registrations[name.to_s] || raise(NameError, "Unregistered data structure type: #{name}")
 
     def set(name, template_collection) = @template_collections[name.to_s] = template_collection
 
     def register_types = DEFAULT_TYPES.each { |name, class_name| register name, class_name }
 
     DEFAULT_TYPES = {
-      template: "DataStructures::Template"
+      template: "DataStructures::Template",
+      section: "DataStructures::Definitions::Section",
+      repeating_group: "DataStructures::Definitions::RepeatingGroup",
+      text: "DataStructures::Definitions::TextField",
+      rich_text: "DataStructures::Definitions::RichTextField",
+      date: "DataStructures::Definitions::DateField",
+      signature: "DataStructures::Definitions::SignatureField"
     }.freeze
     private_constant :DEFAULT_TYPES
 

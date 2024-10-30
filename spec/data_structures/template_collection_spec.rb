@@ -10,7 +10,7 @@ module DataStructures
     Plumbing::Spec.modes do
       context "In #{Plumbing.config.mode} mode" do
         let(:configuration) { Configuration.start }
-        subject(:collection) { TemplateCollection.start configuration }
+        subject(:collection) { described_class.start configuration }
 
         describe "#[]" do
           it "returns the template with the given name" do
@@ -28,15 +28,6 @@ module DataStructures
             template = await { collection.load(type: :load_spec_template, name: "My template", description: "Loaded from config") }
 
             expect(template.class).to eq LoadSpecTemplate
-            expect(template.name).to eq "My template"
-            expect(template.description).to eq "Loaded from config"
-            expect { collection["My template"].value }.to become template
-          end
-
-          it "creates and registers a standard template if no type is supplied" do
-            template = await { collection.load(name: "My template", description: "Loaded from config") }
-
-            expect(template.class).to eq DataStructures::Template
             expect(template.name).to eq "My template"
             expect(template.description).to eq "Loaded from config"
             expect { collection["My template"].value }.to become template
