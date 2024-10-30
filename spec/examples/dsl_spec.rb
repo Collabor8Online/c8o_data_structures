@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "DSL" do
   let(:simple_template_filename) { File.join(__dir__, "simple_template.yml") }
-  let(:simple_template) { YAML.load(File.open(simple_template_filename), symbolize_names: true) }
+  let(:simple_template) { YAML.load(File.open(simple_template_filename)) }
 
   it "defines a simple template" do
     template = await { DataStructures["examples"].load(simple_template) }
@@ -12,7 +12,7 @@ RSpec.describe "DSL" do
   end
 
   let(:order_form_filename) { File.join(__dir__, "order_form.yml") }
-  let(:order_form) { YAML.load(File.open(order_form_filename), symbolize_names: true) }
+  let(:order_form) { YAML.load(File.open(order_form_filename)) }
 
   it "defines a template with a repeating group" do
     template = await { DataStructures["examples"].load(order_form) }
@@ -20,7 +20,7 @@ RSpec.describe "DSL" do
   end
 
   let(:fancy_order_form_filename) { File.join(__dir__, "fancy_order_form.yml") }
-  let(:fancy_order_form) { YAML.load(File.open(fancy_order_form_filename), symbolize_names: true) }
+  let(:fancy_order_form) { YAML.load(File.open(fancy_order_form_filename)) }
 
   it "defines a template with sections and static content" do
     template = await { DataStructures["examples"].load(fancy_order_form) }

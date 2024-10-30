@@ -10,7 +10,7 @@ module DataStructures
     private
 
     def load_items_from config
-      config.map { |item_data| load_item_from(item_data) }
+      config.map { |item_data| load_item_from(item_data.transform_keys(&:to_sym)) }
     end
 
     def load_item_from item_data
