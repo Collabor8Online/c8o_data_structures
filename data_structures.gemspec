@@ -20,6 +20,6 @@ Gem::Specification.new do |spec|
     Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
   end
 
-  spec.add_dependency "rails", ">= 8.0.0.rc1"
+  spec.add_dependency "rails", ">= 7.1.0"
   spec.add_dependency "standard-procedure-plumbing"
 end
