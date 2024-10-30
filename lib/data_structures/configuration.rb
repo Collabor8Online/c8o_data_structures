@@ -3,10 +3,7 @@ module DataStructures
     include Plumbing::Actor
     async :[], :set, :reset, :register, :class_for
 
-    def initialize
-      reset
-      register_types
-    end
+    def initialize = reset
 
     private
 
@@ -21,7 +18,7 @@ module DataStructures
 
     def set(name, template_collection) = @template_collections[name.to_s] = template_collection
 
-    def register_types = DEFAULT_TYPES.each { |name, class_name| register name, class_name }
+    def register_default_types = DEFAULT_TYPES.each { |name, class_name| register name, class_name }
 
     DEFAULT_TYPES = {
       template: "DataStructures::Template",
@@ -37,6 +34,7 @@ module DataStructures
     def reset
       @template_collections = {}
       @class_registrations = {}
+      register_default_types
     end
   end
 end
