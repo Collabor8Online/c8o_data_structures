@@ -2,11 +2,6 @@ require "rails_helper"
 
 module DataStructures
   RSpec.describe TemplateCollection do
-    # standard:disable Lint/ConstantDefinitionInBlock
-    class LoadSpecTemplate < Struct.new(:name, :description, keyword_init: true)
-    end
-    # standard:enable Lint/ConstantDefinitionInBlock
-
     Plumbing::Spec.modes do
       context "In #{Plumbing.config.mode} mode" do
         let(:configuration) { Configuration.start }
@@ -23,13 +18,12 @@ module DataStructures
 
         describe "#load" do
           it "creates and registers the template with the given class" do
-            configuration.register :load_spec_template, LoadSpecTemplate
+            template = double("template", name: "My template")
 
-            template = await { collection.load(type: :load_spec_template, name: "My template", description: "Loaded from config") }
+            allow(DataStructures).to receive(:load).with({type: :template, name: "My template", description: "Loaded from config"}).and_return(template)
 
-            expect(template.class).to eq LoadSpecTemplate
-            expect(template.name).to eq "My template"
-            expect(template.description).to eq "Loaded from config"
+            result = await { collection.load(type: :template, name: "My template", description: "Loaded from config") }
+            expect(result).to eq template
             expect { collection["My template"].value }.to become template
           end
         end

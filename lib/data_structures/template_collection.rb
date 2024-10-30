@@ -13,12 +13,7 @@ module DataStructures
     private
 
     def load config = {}
-      config.delete(:version)
-      type = config.delete(:type)
-
-      klass = await { @configuration.class_for(type) }
-
-      klass.new(**config).tap do |template|
+      DataStructures.load(config).tap do |template|
         set template.name, template
       end
     end
