@@ -21,4 +21,5 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", ">= 8.0.0.rc1"
+  spec.add_dependency "standard-procedure-plumbing"
 end
