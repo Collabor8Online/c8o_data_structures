@@ -1,51 +1,36 @@
 require "rails_helper"
+require_relative "field"
 
 module DataStructures
   module Definitions
     RSpec.describe DateField do
+      it_behaves_like "a field"
+
       describe ".new" do
-        it "sets the caption" do
-          field = described_class.new caption: "When it happened"
-          expect(field.caption).to eq "When it happened"
-        end
-
-        it "sets required" do
-          field = described_class.new caption: "When it happened", required: true
-          expect(field).to be_required
-        end
-
         it "sets the default value" do
-          field = described_class.new caption: "When it happened", default: "today"
+          field = described_class.new caption: "Invoice date", default: "today"
           expect(field.default).to eq "today"
-        end
-
-        it "sets the description" do
-          field = described_class.new caption: "When it happened", description: "It's a date"
-          expect(field.description).to eq "It's a date"
-        end
-      end
-
-      describe "#caption" do
-        it "is required" do
-          expect { described_class.new caption: nil }.to raise_error(ArgumentError)
-        end
-      end
-
-      describe "#description" do
-        it "defaults to an empty string" do
-          expect(described_class.new(caption: "When it happened").description).to eq ""
-        end
-      end
-
-      describe "#required?" do
-        it "is false by default" do
-          expect(described_class.new(caption: "When it happened")).to_not be_required
         end
       end
 
       describe "#default" do
         it "defaults to an empty string" do
-          expect(described_class.new(caption: "When it happened").default).to eq ""
+          expect(described_class.new(caption: "First name").default).to eq ""
+        end
+
+        describe "legal values" do
+          it "allows today"
+          it "allows yesterday"
+          it "allows tomorrow"
+          it "allows a specific date"
+          it "allows a number of days from today: 1d"
+          it "allows a number of days before today: -1d"
+          it "allows a number of weeks from today: 1w"
+          it "allows a number of weeks before today: -1w"
+          it "allows a number of months from today: 1m"
+          it "allows a number of months before today: -1m"
+          it "allows a number of years from today: 1y"
+          it "allows a number of years before today: -1y"
         end
       end
     end

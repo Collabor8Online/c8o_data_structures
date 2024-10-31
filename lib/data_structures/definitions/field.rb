@@ -1,14 +1,12 @@
 module DataStructures
   module Definitions
     class Field
-      def initialize caption:, description: "", required: false, default: ""
-        @caption = caption || raise(ArgumentError, "caption is required")
-        @description = description
-        @required = required
-        @default = default
-      end
-
-      attr_reader :caption, :description, :required, :default
+      include ActiveModel::Model
+      include ActiveModel::Attributes
+      attribute :caption, :string
+      validates :caption, presence: true
+      attribute :description, :string, default: ""
+      attribute :required, :boolean, default: false
 
       def required? = required
     end
