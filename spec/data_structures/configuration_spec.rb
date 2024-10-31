@@ -46,8 +46,17 @@ module DataStructures
           it "pre-registers sections" do
             expect(configuration.class_for(:section).value).to eq DataStructures::Definitions::Section
           end
+
           it "pre-registers repeating groups" do
             expect(configuration.class_for(:repeating_group).value).to eq DataStructures::Definitions::RepeatingGroup
+          end
+
+          it "pre-registers headings" do
+            expect(configuration.class_for(:heading).value).to eq DataStructures::Definitions::Heading
+          end
+
+          it "pre-registers sub-headings" do
+            expect(configuration.class_for(:sub_heading).value).to eq DataStructures::Definitions::SubHeading
           end
 
           it "pre-registers text fields" do
@@ -56,6 +65,10 @@ module DataStructures
 
           it "pre-registers rich text fields" do
             expect(configuration.class_for(:rich_text).value).to eq DataStructures::Definitions::RichTextField
+          end
+
+          it "pre-registers number fields" do
+            expect(configuration.class_for(:number).value).to eq DataStructures::Definitions::NumberField
           end
 
           it "pre-registers date fields" do

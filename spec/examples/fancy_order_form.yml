@@ -5,9 +5,9 @@ type: template
 items:
   - type: section
     items:
-      - type: title
-        text: Order form
       - type: heading
+        text: Order form
+      - type: sub_heading
         text: Personal details
       - type: text
         caption: Your name

@@ -24,8 +24,11 @@ module DataStructures
       template: "DataStructures::Template",
       section: "DataStructures::Definitions::Section",
       repeating_group: "DataStructures::Definitions::RepeatingGroup",
+      heading: "DataStructures::Definitions::Heading",
+      sub_heading: "DataStructures::Definitions::SubHeading",
       text: "DataStructures::Definitions::TextField",
       rich_text: "DataStructures::Definitions::RichTextField",
+      number: "DataStructures::Definitions::NumberField",
       date: "DataStructures::Definitions::DateField",
       signature: "DataStructures::Definitions::SignatureField"
     }.freeze
