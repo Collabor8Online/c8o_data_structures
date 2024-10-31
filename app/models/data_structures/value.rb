@@ -19,5 +19,7 @@ module DataStructures
     def definition=(definition)
       self.definition_configuration = definition.as_json["attributes"].merge("type" => DataStructures.type_for(definition.class))
     end
+
+    def child_values = children.order(:position)
   end
 end

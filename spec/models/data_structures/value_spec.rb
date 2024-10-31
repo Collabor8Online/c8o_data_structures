@@ -73,6 +73,16 @@ module DataStructures
       end
     end
 
+    describe "#child_values" do
+      subject(:value) { described_class.create! container: container }
+      let!(:first) { described_class.create! container: container, parent: value, position: 0 }
+      let!(:second) { described_class.create! container: container, parent: value, position: 1 }
+
+      it "returns the child values in order" do
+        expect(value.child_values).to eq [first, second]
+      end
+    end
+
     describe "#data" do
       subject(:value) { described_class.new }
 
