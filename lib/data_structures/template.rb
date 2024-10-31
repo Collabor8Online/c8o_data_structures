@@ -9,14 +9,6 @@ module DataStructures
 
     private
 
-    def load_items_from config
-      config.map { |item_data| load_item_from(item_data.transform_keys(&:to_sym)) }
-    end
-
-    def load_item_from item_data
-      item_data.delete(:version)
-      type = item_data.delete(:type)
-      DataStructures.class_for(type).new(**item_data)
-    end
+    def load_items_from(config) = config.map { |item_data| DataStructures.load item_data }
   end
 end
