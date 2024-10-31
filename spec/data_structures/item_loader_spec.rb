@@ -6,7 +6,7 @@ module DataStructures
   end
   # standard:enable Lint/ConstantDefinitionInBlock
 
-  RSpec.describe TemplateLoader do
+  RSpec.describe ItemLoader do
     subject(:loader) { described_class.new }
 
     it "loads the template with the given type from the provided configuration" do

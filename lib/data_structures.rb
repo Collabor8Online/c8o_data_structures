@@ -16,7 +16,7 @@ module DataStructures
   end
 
   def self.load config
-    @template_loader.call config
+    @item_loader.call config
   end
 
   def self.reset
@@ -25,9 +25,9 @@ module DataStructures
 
   require_relative "data_structures/configuration"
   require_relative "data_structures/template_collection"
-  require_relative "data_structures/template_loader"
+  require_relative "data_structures/item_loader"
   require_relative "data_structures/template"
   require_relative "data_structures/definitions"
   @configuration = Configuration.start
-  @template_loader = TemplateLoader.new
+  @item_loader = ItemLoader.new
 end
