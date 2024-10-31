@@ -13,13 +13,26 @@ module DataStructures
     validate :container do |value|
       value.errors.add :container, :is_not_a_container unless value.container.is_a? DataStructures::Container
     end
+    after_save if: :saved_change_to_definition_configuration? do
+      create_values_for definition if definition.respond_to? :items
+    end
 
-    def definition = DataStructures.load(definition_configuration)
+    def definition = @definition ||= DataStructures.load(definition_configuration)
 
     def definition=(definition)
+      @definition = definition
       self.definition_configuration = definition.as_json["attributes"].merge("type" => DataStructures.type_for(definition.class))
     end
 
-    def child_values = children.order(:position)
+    def values = children.order(:position)
+
+    private
+
+    def create_values_for definition
+      values.where(position: definition.items.size..).destroy_all
+      definition.items.each_with_index do |item, position|
+        values.where(position: position).first_or_initialize.update! container: container, parent: self, definition: item
+      end
+    end
   end
 end

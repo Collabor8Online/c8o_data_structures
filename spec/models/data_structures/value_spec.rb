@@ -45,6 +45,24 @@ module DataStructures
       end
     end
 
+    describe "#definition - nested definitions" do
+      subject(:value) { described_class.create! container: container, definition: definition }
+      let(:definition) { DataStructures.load("type" => "section", "items" => [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]) }
+
+      it "creates child values for nested definitions" do
+        expect(value.values.size).to eq 3
+        heading = value.values.first.definition
+        expect(heading).to be_kind_of(DataStructures::Definitions::Heading)
+        expect(heading.text).to eq "Hello"
+        sub_heading = value.values.second.definition
+        expect(sub_heading).to be_kind_of(DataStructures::Definitions::SubHeading)
+        expect(sub_heading.text).to eq "World"
+        text_field = value.values.third.definition
+        expect(text_field).to be_kind_of(DataStructures::Definitions::TextField)
+        expect(text_field.caption).to eq "What is your name?"
+      end
+    end
+
     describe "#parent" do
       subject(:value) { described_class.create! container: container }
 
@@ -73,13 +91,13 @@ module DataStructures
       end
     end
 
-    describe "#child_values" do
+    describe "#values" do
       subject(:value) { described_class.create! container: container }
       let!(:first) { described_class.create! container: container, parent: value, position: 0 }
       let!(:second) { described_class.create! container: container, parent: value, position: 1 }
 
       it "returns the child values in order" do
-        expect(value.child_values).to eq [first, second]
+        expect(value.values).to eq [first, second]
       end
     end
 
