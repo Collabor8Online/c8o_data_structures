@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     c8o_data_structures (0.1.0)
+      ancestry
       rails (>= 7.1.0)
       standard-procedure-plumbing
 
@@ -79,6 +80,8 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
+    ancestry (4.3.3)
+      activerecord (>= 5.2.6)
     ast (2.4.2)
     async (2.18.0)
       console (~> 1.26)

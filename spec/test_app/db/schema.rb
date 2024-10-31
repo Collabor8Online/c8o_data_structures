@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_10_28_215141) do
+ActiveRecord::Schema[8.0].define(version: 2024_10_31_164132) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -47,6 +47,37 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_28_215141) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "data_structures_values", force: :cascade do |t|
+    t.string "container_type"
+    t.integer "container_id"
+    t.string "ancestry"
+    t.text "definition_configuration"
+    t.integer "position", default: 0, null: false
+    t.text "data"
+    t.string "model_type"
+    t.integer "model_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["container_type", "container_id", "ancestry"], name: "idx_on_container_type_container_id_ancestry_ccf02f2d42"
+    t.index ["container_type", "container_id"], name: "index_data_structures_values_on_container"
+    t.index ["model_type", "model_id"], name: "index_data_structures_values_on_model"
+  end
+
+  create_table "forms", force: :cascade do |t|
+    t.integer "person_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_forms_on_person_id"
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string "first_name", default: "Alice"
+    t.string "last_name", default: "Aardvark"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
