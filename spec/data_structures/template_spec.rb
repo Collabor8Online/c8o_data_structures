@@ -30,9 +30,10 @@ module DataStructures
 
     describe "#name" do
       it "is required" do
-        expect { described_class.new name: nil, description: "A template for testing" }.to raise_error(ArgumentError)
+        expect(described_class.new(name: nil, description: "A template for testing")).to_not be_valid
       end
     end
+
     describe "#description" do
       it "defaults to an empty string" do
         expect(described_class.new(name: "My template").description).to eq ""

@@ -1,14 +1,19 @@
 module DataStructures
   class Template
-    def initialize name:, description: "", items: []
-      @name = name || raise(ArgumentError, "name is required")
-      @description = description || ""
-      @items = load_items_from(items)
+    include ActiveModel::Model
+    include ActiveModel::Attributes
+    attribute :name, :string
+    validates :name, presence: true
+    attribute :description, :string, default: ""
+    attr_reader :items
+
+    def initialize(items: [], **)
+      super(**)
+      @items = load_items_from items
     end
-    attr_reader :name, :description, :items
 
     private
 
-    def load_items_from(config) = config.map { |item_data| DataStructures.load item_data }
+    def load_items_from(config) = config.map { |item_data| DataStructures.load item_data }.freeze
   end
 end
