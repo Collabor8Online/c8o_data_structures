@@ -1,7 +1,7 @@
 module DataStructures
   class Configuration
     include Plumbing::Actor
-    async :[], :set, :reset, :register, :class_for
+    async :[], :set, :reset, :register, :class_for, :type_for
 
     def initialize = reset
 
@@ -15,6 +15,8 @@ module DataStructures
     end
 
     def class_for(name) = @class_registrations[name.to_s] || raise(NameError, "Unregistered data structure type: #{name}")
+
+    def type_for(klass) = @class_registrations.key(klass)
 
     def set(name, template_collection) = @template_collections[name.to_s] = template_collection
 

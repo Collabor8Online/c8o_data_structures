@@ -90,6 +90,13 @@ module DataStructures
             expect { configuration.class_for(:unknown).value }.to raise_error(NameError)
           end
         end
+
+        describe "#type_for" do
+          it "returns the type name for the given class" do
+            configuration.register :custom_template, "DataStructures::ConfigurationCustomTemplate"
+            expect(configuration.type_for(DataStructures::ConfigurationCustomTemplate).value).to eq "custom_template"
+          end
+        end
       end
     end
   end
