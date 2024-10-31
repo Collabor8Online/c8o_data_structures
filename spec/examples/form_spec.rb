@@ -10,10 +10,10 @@ RSpec.describe "Form" do
   it "attaches values to the form based upon the contents of the template" do
     form.create_values_for template
 
-    expect(form.root_values.size).to eq 3
-    first_section = form.root_values.first
-    second_section = form.root_values.second
-    third_section = form.root_values.third
+    expect(form.values.size).to eq 3
+    first_section = form.values.first
+    second_section = form.values.second
+    third_section = form.values.third
 
     expect(first_section.definition).to be_kind_of(DataStructures::Definitions::Section)
     expect(first_section.values.size).to eq 3

@@ -9,19 +9,19 @@ module DataStructures
     let!(:first_child_value) { Value.create container: container, parent: first_value, position: 0 }
     let!(:second_child_value) { Value.create container: container, parent: first_value, position: 1 }
 
-    describe "#values" do
-      it "lists attached values" do
+    describe "#data_values" do
+      it "lists all attached values" do
         [first_value, second_value, first_child_value, second_child_value].each do |value|
-          expect(container.values).to include value
+          expect(container.data_values).to include value
         end
       end
     end
 
-    describe "#root_values" do
+    describe "#values" do
       it "lists attached root values in order" do
-        expect(container.root_values.last).to eq second_value
-        expect(container.root_values.first).to eq first_value
-        expect(container.root_values.size).to eq 2
+        expect(container.values.last).to eq second_value
+        expect(container.values.first).to eq first_value
+        expect(container.values.size).to eq 2
       end
     end
 
@@ -31,17 +31,17 @@ module DataStructures
 
         container.create_values_for template
 
-        expect(container.root_values.size).to eq 3
+        expect(container.values.size).to eq 3
 
-        heading = container.root_values.first.definition
+        heading = container.values.first.definition
         expect(heading).to be_kind_of(DataStructures::Definitions::Heading)
         expect(heading.text).to eq "Hello"
 
-        sub_heading = container.root_values.second.definition
+        sub_heading = container.values.second.definition
         expect(sub_heading).to be_kind_of(DataStructures::Definitions::SubHeading)
         expect(sub_heading.text).to eq "World"
 
-        text_field = container.root_values.third.definition
+        text_field = container.values.third.definition
         expect(text_field).to be_kind_of(DataStructures::Definitions::TextField)
         expect(text_field.caption).to eq "What is your name?"
       end
@@ -51,12 +51,11 @@ module DataStructures
 
         container.create_values_for template
 
-        puts container.root_values.map { |v| v.definition.class.name }.inspect
-        expect(container.root_values.size).to eq 1
-        section = container.root_values.first.definition
+        expect(container.values.size).to eq 1
+        section = container.values.first.definition
         expect(section).to be_kind_of(DataStructures::Definitions::Section)
 
-        sub_heading = container.root_values.first.values.first.definition
+        sub_heading = container.values.first.values.first.definition
         expect(sub_heading).to be_kind_of(DataStructures::Definitions::SubHeading)
         expect(sub_heading.text).to eq "Hello world"
       end
@@ -66,8 +65,8 @@ module DataStructures
 
         container.create_values_for template
 
-        expect(container.root_values.size).to eq 1
-        section = container.root_values.first
+        expect(container.values.size).to eq 1
+        section = container.values.first
         expect(section.definition).to be_kind_of(DataStructures::Definitions::Section)
 
         sub_section = section.values.first
