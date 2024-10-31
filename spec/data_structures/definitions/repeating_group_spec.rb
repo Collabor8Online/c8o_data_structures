@@ -1,15 +1,10 @@
 require "rails_helper"
+require_relative "../container"
 
 module DataStructures
   module Definitions
     RSpec.describe RepeatingGroup do
-      describe ".new" do
-        it "sets the contained items"
-      end
-
-      describe "#items" do
-        it "default to an empty array"
-      end
+      it_behaves_like "a container", {}
     end
   end
 end

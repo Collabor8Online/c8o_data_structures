@@ -1,11 +1,8 @@
+require_relative "container"
+
 module DataStructures
   module Definitions
-    class RepeatingGroup
-      def initialize items: []
-        @items = items
-      end
-
-      attr_reader :items
+    class RepeatingGroup < Definitions::Container
     end
   end
 end

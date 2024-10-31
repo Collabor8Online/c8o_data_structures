@@ -1,4 +1,5 @@
 require "rails_helper"
+require_relative "container"
 
 module DataStructures
   RSpec.describe Template do
@@ -9,23 +10,7 @@ module DataStructures
         expect(template.description).to eq "A template for testing"
       end
 
-      it "creates a set of items based on the configuration" do
-        template = described_class.new name: "My template", description: "A template for testing", items: [
-          {type: "text", caption: "First name"},
-          {type: "text", caption: "Last name", required: true}
-        ]
-        expect(template.items.size).to eq 2
-
-        first_name = template.items[0]
-        expect(first_name).to be_kind_of(DataStructures::Definitions::TextField)
-        expect(first_name.caption).to eq "First name"
-        expect(first_name).to_not be_required
-
-        last_name = template.items[1]
-        expect(last_name).to be_kind_of(DataStructures::Definitions::TextField)
-        expect(last_name.caption).to eq "Last name"
-        expect(last_name).to be_required
-      end
+      it_behaves_like "a container", name: "My template", description: "A template for testing"
     end
 
     describe "#name" do
