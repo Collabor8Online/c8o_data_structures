@@ -20,7 +20,7 @@ module DataStructures
           it "creates and registers the template with the given class" do
             template = double("template", name: "My template")
 
-            allow(DataStructures).to receive(:load).with({type: :template, name: "My template", description: "Loaded from config"}).and_return(template)
+            allow(DataStructures::Definition).to receive(:load).with({type: :template, name: "My template", description: "Loaded from config"}).and_return(template)
 
             result = await { collection.load(type: :template, name: "My template", description: "Loaded from config") }
             expect(result).to eq template

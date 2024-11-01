@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe "Form" do
   let(:fancy_order_form_filename) { File.join(__dir__, "fancy_order_form.yml") }
   let(:fancy_order_form) { YAML.load(File.open(fancy_order_form_filename)) }
-  let(:template) { DataStructures.load(fancy_order_form) }
+  let(:template) { DataStructures::Definition.load(fancy_order_form) }
   let(:alice) { Person.create(first_name: "Alice", last_name: "Aardvark") }
   let(:form) { Form.create(person: alice, name: "My form") }
 

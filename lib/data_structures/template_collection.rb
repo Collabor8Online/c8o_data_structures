@@ -11,7 +11,7 @@ module DataStructures
     private
 
     def load config = {}
-      DataStructures.load(config).tap do |template|
+      DataStructures::Definition.load(config).tap do |template|
         set template.name, template
       end
     end

@@ -10,7 +10,7 @@ module DataStructures
 
       private
 
-      def load_items_from(config) = config.map { |item_data| DataStructures.load item_data }.freeze
+      def load_items_from(config) = config.map { |item_data| DataStructures::Definition.load item_data }.freeze
     end
   end
 end

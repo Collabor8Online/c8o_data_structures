@@ -27,7 +27,7 @@ module DataStructures
 
     describe "#create_values_for" do
       it "creates values, in order, for each definition in the given template" do
-        template = DataStructures.load type: "template", name: "Top level items", items: [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]
+        template = DataStructures::Definition.load type: "template", name: "Top level items", items: [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]
 
         container.create_values_for template
 
@@ -47,7 +47,7 @@ module DataStructures
       end
 
       it "adds child values, in order, for each definition in the given template" do
-        template = DataStructures.load type: "template", name: "Nested items", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]
+        template = DataStructures::Definition.load type: "template", name: "Nested items", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]
 
         container.create_values_for template
 
@@ -61,7 +61,7 @@ module DataStructures
       end
 
       it "adds grand-child values, in order, for each definition in the given template" do
-        template = DataStructures.load type: "template", name: "Nested items", items: [{type: "section", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]}]
+        template = DataStructures::Definition.load type: "template", name: "Nested items", items: [{type: "section", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]}]
 
         container.create_values_for template
 

@@ -9,13 +9,10 @@ module DataStructures
 
   def self.class_for(name) = await { @configuration.class_for name }
 
-  def self.load(config) = @item_loader.call config
-
   def self.type_for(klass) = await { @configuration.type_for klass }
 
   def self.reset = @configuration.reset
 
-  require_relative "data_structures/item_loader"
   require_relative "data_structures/definition"
   require_relative "data_structures/definition/container"
   require_relative "data_structures/definition/template"
@@ -24,5 +21,4 @@ module DataStructures
   require_relative "data_structures/configuration"
   require_relative "data_structures/template_collection"
   @configuration = Configuration.start
-  @item_loader = ItemLoader.new
 end

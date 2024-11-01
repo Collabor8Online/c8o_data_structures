@@ -47,7 +47,7 @@ module DataStructures
 
     describe "#definition - nested Definition" do
       subject(:value) { described_class.create! container: container, definition: definition }
-      let(:definition) { DataStructures.load("type" => "section", "items" => [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]) }
+      let(:definition) { DataStructures::Definition.load("type" => "section", "items" => [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]) }
 
       it "creates child values for nested Definition" do
         expect(value.values.size).to eq 3

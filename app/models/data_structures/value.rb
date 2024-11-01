@@ -17,7 +17,7 @@ module DataStructures
       create_values_for definition if definition.respond_to? :items
     end
 
-    def definition = @definition ||= DataStructures.load(definition_configuration)
+    def definition = @definition ||= DataStructures::Definition.load(definition_configuration)
 
     def definition=(definition)
       @definition = definition
