@@ -4,12 +4,12 @@ RSpec.shared_examples "a container" do |default_params|
     expect(container.items.size).to eq 2
 
     first_name = container.items[0]
-    expect(first_name).to be_kind_of(DataStructures::Definitions::TextField)
+    expect(first_name).to be_kind_of(DataStructures::Definition::TextField)
     expect(first_name.caption).to eq "First name"
     expect(first_name).to_not be_required
 
     last_name = container.items[1]
-    expect(last_name).to be_kind_of(DataStructures::Definitions::TextField)
+    expect(last_name).to be_kind_of(DataStructures::Definition::TextField)
     expect(last_name.caption).to eq "Last name"
     expect(last_name).to be_required
   end

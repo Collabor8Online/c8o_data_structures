@@ -40,43 +40,43 @@ module DataStructures
           end
 
           it "pre-registers templates" do
-            expect(configuration.class_for(:template).value).to eq DataStructures::Template
+            expect(configuration.class_for(:template).value).to eq DataStructures::Definition::Template
           end
 
           it "pre-registers sections" do
-            expect(configuration.class_for(:section).value).to eq DataStructures::Definitions::Section
+            expect(configuration.class_for(:section).value).to eq DataStructures::Definition::Section
           end
 
           it "pre-registers repeating groups" do
-            expect(configuration.class_for(:repeating_group).value).to eq DataStructures::Definitions::RepeatingGroup
+            expect(configuration.class_for(:repeating_group).value).to eq DataStructures::Definition::RepeatingGroup
           end
 
           it "pre-registers headings" do
-            expect(configuration.class_for(:heading).value).to eq DataStructures::Definitions::Heading
+            expect(configuration.class_for(:heading).value).to eq DataStructures::Definition::Heading
           end
 
           it "pre-registers sub-headings" do
-            expect(configuration.class_for(:sub_heading).value).to eq DataStructures::Definitions::SubHeading
+            expect(configuration.class_for(:sub_heading).value).to eq DataStructures::Definition::SubHeading
           end
 
           it "pre-registers text fields" do
-            expect(configuration.class_for(:text).value).to eq DataStructures::Definitions::TextField
+            expect(configuration.class_for(:text).value).to eq DataStructures::Definition::TextField
           end
 
           it "pre-registers rich text fields" do
-            expect(configuration.class_for(:rich_text).value).to eq DataStructures::Definitions::RichTextField
+            expect(configuration.class_for(:rich_text).value).to eq DataStructures::Definition::RichTextField
           end
 
           it "pre-registers number fields" do
-            expect(configuration.class_for(:number).value).to eq DataStructures::Definitions::NumberField
+            expect(configuration.class_for(:number).value).to eq DataStructures::Definition::NumberField
           end
 
           it "pre-registers date fields" do
-            expect(configuration.class_for(:date).value).to eq DataStructures::Definitions::DateField
+            expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
           end
 
           it "pre-registers signature fields" do
-            expect(configuration.class_for(:signature).value).to eq DataStructures::Definitions::SignatureField
+            expect(configuration.class_for(:signature).value).to eq DataStructures::Definition::SignatureField
           end
         end
 

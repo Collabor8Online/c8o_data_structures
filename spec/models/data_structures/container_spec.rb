@@ -34,15 +34,15 @@ module DataStructures
         expect(container.values.size).to eq 3
 
         heading = container.values.first.definition
-        expect(heading).to be_kind_of(DataStructures::Definitions::Heading)
+        expect(heading).to be_kind_of(DataStructures::Definition::Heading)
         expect(heading.text).to eq "Hello"
 
         sub_heading = container.values.second.definition
-        expect(sub_heading).to be_kind_of(DataStructures::Definitions::SubHeading)
+        expect(sub_heading).to be_kind_of(DataStructures::Definition::SubHeading)
         expect(sub_heading.text).to eq "World"
 
         text_field = container.values.third.definition
-        expect(text_field).to be_kind_of(DataStructures::Definitions::TextField)
+        expect(text_field).to be_kind_of(DataStructures::Definition::TextField)
         expect(text_field.caption).to eq "What is your name?"
       end
 
@@ -53,10 +53,10 @@ module DataStructures
 
         expect(container.values.size).to eq 1
         section = container.values.first.definition
-        expect(section).to be_kind_of(DataStructures::Definitions::Section)
+        expect(section).to be_kind_of(DataStructures::Definition::Section)
 
         sub_heading = container.values.first.values.first.definition
-        expect(sub_heading).to be_kind_of(DataStructures::Definitions::SubHeading)
+        expect(sub_heading).to be_kind_of(DataStructures::Definition::SubHeading)
         expect(sub_heading.text).to eq "Hello world"
       end
 
@@ -67,13 +67,13 @@ module DataStructures
 
         expect(container.values.size).to eq 1
         section = container.values.first
-        expect(section.definition).to be_kind_of(DataStructures::Definitions::Section)
+        expect(section.definition).to be_kind_of(DataStructures::Definition::Section)
 
         sub_section = section.values.first
-        expect(sub_section.definition).to be_kind_of(DataStructures::Definitions::Section)
+        expect(sub_section.definition).to be_kind_of(DataStructures::Definition::Section)
 
         sub_heading = sub_section.values.first
-        expect(sub_heading.definition).to be_kind_of(DataStructures::Definitions::SubHeading)
+        expect(sub_heading.definition).to be_kind_of(DataStructures::Definition::SubHeading)
         expect(sub_heading.definition.text).to eq "Hello world"
       end
     end

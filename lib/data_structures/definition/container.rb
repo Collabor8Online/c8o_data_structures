@@ -1,8 +1,6 @@
 module DataStructures
-  module Definitions
-    class Container
-      include ActiveModel::Model
-      include ActiveModel::Attributes
+  class Definition
+    class Container < Definition
       attr_reader :items
 
       def initialize(items: [], **)

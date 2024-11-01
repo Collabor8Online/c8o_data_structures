@@ -1,5 +1,5 @@
 module DataStructures
-  module Definitions
+  class Definition
     class DateField < Field
       attribute :default, :string, default: ""
       validate :default do |date_field|

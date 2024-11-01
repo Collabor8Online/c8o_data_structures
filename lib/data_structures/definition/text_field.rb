@@ -1,6 +1,6 @@
 module DataStructures
-  module Definitions
-    class RichTextField < Field
+  class Definition
+    class TextField < Field
       attribute :default, :string, default: ""
     end
   end

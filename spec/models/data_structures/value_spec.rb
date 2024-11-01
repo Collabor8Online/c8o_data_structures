@@ -30,13 +30,13 @@ module DataStructures
       it "is loaded from the definition configuration" do
         definition = value.definition
 
-        expect(definition).to be_kind_of(DataStructures::Definitions::TextField)
+        expect(definition).to be_kind_of(DataStructures::Definition::TextField)
         expect(definition.caption).to eq "What's your name?"
         expect(definition).to be_required
       end
 
       it "is written to the definition configuration" do
-        value.definition = DataStructures::Definitions::TextField.new(caption: "What is your favourite ice-cream?", required: true, default: "Chocolate")
+        value.definition = DataStructures::Definition::TextField.new(caption: "What is your favourite ice-cream?", required: true, default: "Chocolate")
 
         expect(value.definition_configuration["type"]).to eq "text"
         expect(value.definition_configuration["caption"]).to eq "What is your favourite ice-cream?"
@@ -45,20 +45,20 @@ module DataStructures
       end
     end
 
-    describe "#definition - nested definitions" do
+    describe "#definition - nested Definition" do
       subject(:value) { described_class.create! container: container, definition: definition }
       let(:definition) { DataStructures.load("type" => "section", "items" => [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]) }
 
-      it "creates child values for nested definitions" do
+      it "creates child values for nested Definition" do
         expect(value.values.size).to eq 3
         heading = value.values.first.definition
-        expect(heading).to be_kind_of(DataStructures::Definitions::Heading)
+        expect(heading).to be_kind_of(DataStructures::Definition::Heading)
         expect(heading.text).to eq "Hello"
         sub_heading = value.values.second.definition
-        expect(sub_heading).to be_kind_of(DataStructures::Definitions::SubHeading)
+        expect(sub_heading).to be_kind_of(DataStructures::Definition::SubHeading)
         expect(sub_heading.text).to eq "World"
         text_field = value.values.third.definition
-        expect(text_field).to be_kind_of(DataStructures::Definitions::TextField)
+        expect(text_field).to be_kind_of(DataStructures::Definition::TextField)
         expect(text_field.caption).to eq "What is your name?"
       end
     end

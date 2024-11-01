@@ -15,11 +15,14 @@ module DataStructures
 
   def self.reset = @configuration.reset
 
+  require_relative "data_structures/item_loader"
+  require_relative "data_structures/definition"
+  require_relative "data_structures/definition/container"
+  require_relative "data_structures/definition/template"
+  require_relative "data_structures/definition/field"
+  Dir[File.join(__dir__, "data_structures/definition", "*.rb")].sort.each { |file| require file }
   require_relative "data_structures/configuration"
   require_relative "data_structures/template_collection"
-  require_relative "data_structures/item_loader"
-  require_relative "data_structures/template"
-  require_relative "data_structures/definitions"
   @configuration = Configuration.start
   @item_loader = ItemLoader.new
 end

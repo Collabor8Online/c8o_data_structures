@@ -23,16 +23,16 @@ module DataStructures
     def register_default_types = DEFAULT_TYPES.each { |name, class_name| register name, class_name }
 
     DEFAULT_TYPES = {
-      template: "DataStructures::Template",
-      section: "DataStructures::Definitions::Section",
-      repeating_group: "DataStructures::Definitions::RepeatingGroup",
-      heading: "DataStructures::Definitions::Heading",
-      sub_heading: "DataStructures::Definitions::SubHeading",
-      text: "DataStructures::Definitions::TextField",
-      rich_text: "DataStructures::Definitions::RichTextField",
-      number: "DataStructures::Definitions::NumberField",
-      date: "DataStructures::Definitions::DateField",
-      signature: "DataStructures::Definitions::SignatureField"
+      template: "DataStructures::Definition::Template",
+      section: "DataStructures::Definition::Section",
+      repeating_group: "DataStructures::Definition::RepeatingGroup",
+      heading: "DataStructures::Definition::Heading",
+      sub_heading: "DataStructures::Definition::SubHeading",
+      text: "DataStructures::Definition::TextField",
+      rich_text: "DataStructures::Definition::RichTextField",
+      number: "DataStructures::Definition::NumberField",
+      date: "DataStructures::Definition::DateField",
+      signature: "DataStructures::Definition::SignatureField"
     }.freeze
     private_constant :DEFAULT_TYPES
 

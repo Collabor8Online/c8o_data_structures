@@ -1,5 +1,3 @@
-require_relative "template"
-
 module DataStructures
   class TemplateCollection
     include Plumbing::Actor

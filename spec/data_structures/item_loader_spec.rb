@@ -24,7 +24,7 @@ module DataStructures
 
       template = loader.call(params)
 
-      expect(template.class).to eq Template
+      expect(template.class).to eq Definition::Template
       expect(template.name).to eq "My template"
       expect(template.description).to eq "Loaded from config"
     end

@@ -1,5 +1,5 @@
 module DataStructures
-  module Definitions
+  class Definition
     class NumberField < Field
       attribute :default, :integer
       validates_numericality_of :default, only_integer: true, allow_nil: true

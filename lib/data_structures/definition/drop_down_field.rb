@@ -1,5 +1,5 @@
 module DataStructures
-  module Definitions
+  class Definition
     class DropDownField < Field
       attr_reader :options
       attribute :default, :string, default: ""

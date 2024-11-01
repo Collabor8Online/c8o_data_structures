@@ -1,8 +1,8 @@
 require "rails_helper"
-require_relative "../container"
+require_relative "container"
 
 module DataStructures
-  module Definitions
+  class Definition
     RSpec.describe Section do
       it_behaves_like "a container", {}
     end

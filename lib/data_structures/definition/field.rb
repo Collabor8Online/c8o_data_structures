@@ -1,8 +1,6 @@
 module DataStructures
-  module Definitions
-    class Field
-      include ActiveModel::Model
-      include ActiveModel::Attributes
+  class Definition
+    class Field < Definition
       attribute :caption, :string
       validates :caption, presence: true
       attribute :description, :string, default: ""

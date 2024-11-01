@@ -1,8 +1,8 @@
 require_relative "container"
 
 module DataStructures
-  module Definitions
-    class Section < Definitions::Container
+  class Definition
+    class Section < Container
     end
   end
 end

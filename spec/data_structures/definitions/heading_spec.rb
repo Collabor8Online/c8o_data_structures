@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module DataStructures
-  module Definitions
+  class Definition
     RSpec.describe Heading do
       describe ".new" do
         it "sets the text" do
