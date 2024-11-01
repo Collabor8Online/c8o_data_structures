@@ -2,7 +2,7 @@ require "rails_helper"
 
 module DataStructures
   # standard:disable Lint/ConstantDefinitionInBlock
-  class LoadSpecTemplate < Struct.new(:name, :description, keyword_init: true)
+  class LoadSpecTemplate < Definition::Template
   end
   # standard:enable Lint/ConstantDefinitionInBlock
 
@@ -32,6 +32,33 @@ module DataStructures
 
       it "requires a type to be specified" do
         expect { definition.load(name: "My template", description: "Loaded from config") }.to raise_error(ArgumentError)
+      end
+    end
+
+    describe ".dump" do
+      subject(:definition) { described_class }
+
+      it "saves the template recording its type, data and items" do
+        template = Definition.load type: "template", name: "My template", description: "Loaded from config", items: [
+          {type: "section", items: [
+            {type: "text", caption: "My text", description: "Loaded from config", required: true}
+          ]}
+        ]
+
+        config = definition.dump(template)
+
+        expect(config["type"]).to eq "template"
+        expect(config["name"]).to eq "My template"
+        expect(config["description"]).to eq "Loaded from config"
+        expect(config["items"].size).to eq 1
+        section_config = config["items"].first
+        expect(section_config["type"]).to eq "section"
+        expect(section_config["items"].size).to eq 1
+        text_config = section_config["items"].first
+        expect(text_config["type"]).to eq "text"
+        expect(text_config["caption"]).to eq "My text"
+        expect(text_config["description"]).to eq "Loaded from config"
+        expect(text_config["required"]).to eq true
       end
     end
   end
