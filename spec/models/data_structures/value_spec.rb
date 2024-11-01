@@ -4,6 +4,7 @@ module DataStructures
   RSpec.describe Value, type: :model do
     let(:alice) { Person.create(first_name: "Alice", last_name: "Aardvark") }
     let(:container) { Form.create(person: alice, name: "My form") }
+    let(:definition_configuration) { {"type" => "text", "caption" => "What's your name?", "required" => true, "default" => "Alice"} }
 
     describe "#container" do
       subject(:value) { described_class.new container: nil }
@@ -25,7 +26,7 @@ module DataStructures
     end
 
     describe "#definition" do
-      subject(:value) { described_class.new definition_configuration: {"type" => "text", "caption" => "What's your name?", "required" => true, "default" => "Alice"} }
+      subject(:value) { described_class.new definition_configuration: definition_configuration }
 
       it "is loaded from the definition configuration" do
         definition = value.definition
@@ -92,7 +93,7 @@ module DataStructures
     end
 
     describe "#values" do
-      subject(:value) { described_class.create! container: container }
+      subject(:value) { described_class.create! container: container, definition_configuration: definition_configuration }
       let!(:first) { described_class.create! container: container, parent: value, position: 0 }
       let!(:second) { described_class.create! container: container, parent: value, position: 1 }
 

@@ -30,6 +30,16 @@ module DataStructures
         expect(template.description).to eq "Loaded from config"
       end
 
+      it "loads a template from a JSON string" do
+        params = {"type" => "template", "name" => "My template", "description" => "Loaded from config"}.to_json
+
+        template = definition.load(params)
+
+        expect(template.class).to eq Definition::Template
+        expect(template.name).to eq "My template"
+        expect(template.description).to eq "Loaded from config"
+      end
+
       it "requires a type to be specified" do
         expect { definition.load(name: "My template", description: "Loaded from config") }.to raise_error(ArgumentError)
       end
