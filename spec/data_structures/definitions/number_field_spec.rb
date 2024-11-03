@@ -76,7 +76,7 @@ module DataStructures
           expect(described_class.new(caption: "Not allowed", maximum: "not an integer").maximum).to eq 0
         end
 
-        describe "item value" do
+        describe "item" do
           subject(:item) { described_class.new caption: "Some field", maximum: 100 }
 
           it_behaves_like "a field", legal_values: [-1, 99, 100], illegal_values: [101, 102, 103]

@@ -10,7 +10,10 @@ module DataStructures
 
       def required? = required
 
-      def validate_item(item)= self.class.validator&.call(item, self)
+      def validate_item(item)
+        validate_required_value_for item if required? && item.persisted?
+        self.class.validator&.call(item, self)
+      end
 
       def set_value_for(item, value) = self.class.setter.nil? ? set_item_data_value(item, value) : self.class.setter.call(item, value, self)
 
@@ -44,6 +47,10 @@ module DataStructures
 
       def get_item_default_value item
         item.definition.respond_to?(:default) ? item.definition.default : nil
+      end
+
+      def validate_required_value_for item
+        ActiveModel::Validations::PresenceValidator.new(attributes: :value).validate(item)
       end
     end
   end
