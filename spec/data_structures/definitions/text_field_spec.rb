@@ -4,8 +4,6 @@ require_relative "field"
 module DataStructures
   class Definition
     RSpec.describe TextField do
-      it_behaves_like "a field"
-
       describe ".new" do
         it "sets the default value" do
           field = described_class.new caption: "First name", default: "John"
@@ -17,6 +15,12 @@ module DataStructures
         it "defaults to an empty string" do
           expect(described_class.new(caption: "First name").default).to eq ""
         end
+      end
+
+      describe "managing items" do
+        subject(:item) { described_class.new caption: "Some field", default: "BOOM" }
+
+        it_behaves_like "a field", legal_values: ["some text", "some other text", 123, Date.today], default: "BOOM"
       end
     end
   end

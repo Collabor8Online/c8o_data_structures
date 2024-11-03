@@ -4,10 +4,11 @@ module DataStructures
   RSpec.describe Container, type: :model do
     subject(:container) { Form.create person: alice, name: "My form" }
     let(:alice) { Person.create first_name: "Alice", last_name: "Aardvark" }
-    let!(:first_item) { Item.create container: container, position: 0 }
-    let!(:second_item) { Item.create container: container, position: 1 }
-    let!(:first_child_item) { Item.create container: container, parent: first_item, position: 0 }
-    let!(:second_child_item) { Item.create container: container, parent: first_item, position: 1 }
+    let(:definition_configuration) { {"type" => "text", "caption" => "What's your name?", "required" => true, "default" => "Alice"} }
+    let!(:first_item) { Item.create container: container, position: 0, definition_configuration: definition_configuration }
+    let!(:second_item) { Item.create container: container, position: 1, definition_configuration: definition_configuration }
+    let!(:first_child_item) { Item.create container: container, parent: first_item, position: 0, definition_configuration: definition_configuration }
+    let!(:second_child_item) { Item.create container: container, parent: first_item, position: 1, definition_configuration: definition_configuration }
 
     describe "#data_items" do
       it "lists all attached items" do

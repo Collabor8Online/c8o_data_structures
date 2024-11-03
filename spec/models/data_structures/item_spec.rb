@@ -7,7 +7,7 @@ module DataStructures
     let(:definition_configuration) { {"type" => "text", "caption" => "What's your name?", "required" => true, "default" => "Alice"} }
 
     describe "#container" do
-      subject(:item) { described_class.new container: nil }
+      subject(:item) { described_class.new container: nil, definition_configuration: definition_configuration }
 
       it "must be present" do
         item.container = nil
@@ -65,28 +65,28 @@ module DataStructures
     end
 
     describe "#parent" do
-      subject(:item) { described_class.create! container: container }
+      subject(:item) { described_class.create! container: container, definition_configuration: definition_configuration }
 
       it "is nil for top-level items" do
         expect(item.parent).to be_nil
       end
 
       it "is the parent item for nested items" do
-        child = described_class.create! container: container, parent: item
+        child = described_class.create! container: container, parent: item, definition_configuration: definition_configuration
 
         expect(child.parent).to eq item
       end
     end
 
     describe "#children" do
-      subject(:item) { described_class.create! container: container }
+      subject(:item) { described_class.create! container: container, definition_configuration: definition_configuration }
 
       it "is empty for items without children" do
         expect(item.children).to be_empty
       end
 
       it "contains the child items" do
-        child = described_class.create! container: container, parent: item
+        child = described_class.create! container: container, parent: item, definition_configuration: definition_configuration
 
         expect(item.children).to include child
       end
@@ -94,8 +94,8 @@ module DataStructures
 
     describe "#items" do
       subject(:item) { described_class.create! container: container, definition_configuration: definition_configuration }
-      let!(:first) { described_class.create! container: container, parent: item, position: 0 }
-      let!(:second) { described_class.create! container: container, parent: item, position: 1 }
+      let!(:first) { described_class.create! container: container, parent: item, position: 0, definition_configuration: definition_configuration }
+      let!(:second) { described_class.create! container: container, parent: item, position: 1, definition_configuration: definition_configuration }
 
       it "returns the child items in order" do
         expect(item.items).to eq [first, second]

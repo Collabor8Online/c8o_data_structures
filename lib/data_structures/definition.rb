@@ -9,20 +9,23 @@ module DataStructures
       end
     end
 
-    def self.load config
-      config = convert_json(config) if config.is_a? String
-      config = config.transform_keys(&:to_sym).except(:version)
-      type = config.delete(:type) || raise(ArgumentError, "Type must be specified")
-      DataStructures.class_for(type).new(**config)
-    end
+    def validate_item(item)= true
 
-    def self.dump definition
-      definition.to_h
-    end
+    def set_value_for(item, value)= nil
 
-    def self.convert_json string
-      JSON.parse(string, symbolize_names: true)
+    def get_value_for(item)= nil
+
+    class << self
+      def load config
+        config = convert_json(config) if config.is_a? String
+        config = config.transform_keys(&:to_sym).except(:version)
+        type = config.delete(:type) || raise(ArgumentError, "Type must be specified")
+        DataStructures.class_for(type).new(**config)
+      end
+
+      def dump(definition) = definition.to_h
+
+      private def convert_json(string) = JSON.parse(string, symbolize_names: true)
     end
-    private_class_method :convert_json
   end
 end
