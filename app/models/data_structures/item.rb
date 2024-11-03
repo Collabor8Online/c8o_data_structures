@@ -1,7 +1,7 @@
 require "ancestry"
 
 module DataStructures
-  class Value < ApplicationRecord
+  class Item < ApplicationRecord
     has_ancestry
     belongs_to :container, polymorphic: true
     serialize :definition_configuration, type: Hash, coder: JSON
@@ -14,7 +14,7 @@ module DataStructures
       value.errors.add :container, :is_not_a_container unless value.container.is_a? DataStructures::Container
     end
     after_save if: :saved_change_to_definition_configuration? do
-      create_values_for definition if definition.respond_to? :items
+      create_items_for definition if definition.respond_to? :items
     end
 
     def definition = @definition ||= DataStructures::Definition.load(definition_configuration)
@@ -24,14 +24,14 @@ module DataStructures
       self.definition_configuration = Definition.dump(definition)
     end
 
-    def values = children.order(:position)
+    def items = children.order(:position)
 
     private
 
-    def create_values_for definition
-      values.where(position: definition.items.size..).destroy_all
+    def create_items_for definition
+      items.where(position: definition.items.size..).destroy_all
       definition.items.each_with_index do |item, position|
-        values.where(position: position).first_or_initialize.update! container: container, parent: self, definition: item
+        items.where(position: position).first_or_initialize.update! container: container, parent: self, definition: item
       end
     end
   end

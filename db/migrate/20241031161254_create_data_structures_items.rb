@@ -1,6 +1,6 @@
-class CreateDataStructuresValues < ActiveRecord::Migration[8.0]
+class CreateDataStructuresItems < ActiveRecord::Migration[8.0]
   def change
-    create_table :data_structures_values, if_not_exists: true do |t|
+    create_table :data_structures_items, if_not_exists: true do |t|
       t.belongs_to :container, polymorphic: true
       t.string :ancestry
       t.text :definition_configuration
@@ -10,6 +10,6 @@ class CreateDataStructuresValues < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :data_structures_values, [:container_type, :container_id, :ancestry], if_not_exists: true
+    add_index :data_structures_items, [:container_type, :container_id, :ancestry], if_not_exists: true
   end
 end

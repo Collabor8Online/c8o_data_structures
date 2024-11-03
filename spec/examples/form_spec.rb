@@ -8,33 +8,33 @@ RSpec.describe "Form" do
   let(:form) { Form.create(person: alice, name: "My form") }
 
   it "attaches values to the form based upon the contents of the template" do
-    form.create_values_for template
+    form.create_items_for template
 
-    expect(form.values.size).to eq 3
-    first_section = form.values.first
-    second_section = form.values.second
-    third_section = form.values.third
+    expect(form.items.size).to eq 3
+    first_section = form.items.first
+    second_section = form.items.second
+    third_section = form.items.third
 
     expect(first_section.definition).to be_kind_of(DataStructures::Definition::Section)
-    expect(first_section.values.size).to eq 3
-    expect(first_section.values.first.definition).to be_kind_of(DataStructures::Definition::Heading)
-    expect(first_section.values.second.definition).to be_kind_of(DataStructures::Definition::SubHeading)
-    expect(first_section.values.third.definition).to be_kind_of(DataStructures::Definition::TextField)
+    expect(first_section.items.size).to eq 3
+    expect(first_section.items.first.definition).to be_kind_of(DataStructures::Definition::Heading)
+    expect(first_section.items.second.definition).to be_kind_of(DataStructures::Definition::SubHeading)
+    expect(first_section.items.third.definition).to be_kind_of(DataStructures::Definition::TextField)
 
     expect(second_section.definition).to be_kind_of(DataStructures::Definition::Section)
-    expect(second_section.values.size).to eq 2
-    expect(second_section.values.first.definition).to be_kind_of(DataStructures::Definition::Heading)
-    expect(second_section.values.second.definition).to be_kind_of(DataStructures::Definition::RepeatingGroup)
+    expect(second_section.items.size).to eq 2
+    expect(second_section.items.first.definition).to be_kind_of(DataStructures::Definition::Heading)
+    expect(second_section.items.second.definition).to be_kind_of(DataStructures::Definition::RepeatingGroup)
 
-    repeating_group = second_section.values.second
-    expect(repeating_group.values.size).to eq 3
-    expect(repeating_group.values.first.definition).to be_kind_of(DataStructures::Definition::TextField)
-    expect(repeating_group.values.second.definition).to be_kind_of(DataStructures::Definition::NumberField)
-    expect(repeating_group.values.third.definition).to be_kind_of(DataStructures::Definition::RichTextField)
+    repeating_group = second_section.items.second
+    expect(repeating_group.items.size).to eq 3
+    expect(repeating_group.items.first.definition).to be_kind_of(DataStructures::Definition::TextField)
+    expect(repeating_group.items.second.definition).to be_kind_of(DataStructures::Definition::NumberField)
+    expect(repeating_group.items.third.definition).to be_kind_of(DataStructures::Definition::RichTextField)
 
     expect(third_section.definition).to be_kind_of(DataStructures::Definition::Section)
-    expect(third_section.values.size).to eq 2
-    expect(third_section.values.first.definition).to be_kind_of(DataStructures::Definition::DateField)
-    expect(third_section.values.second.definition).to be_kind_of(DataStructures::Definition::SignatureField)
+    expect(third_section.items.size).to eq 2
+    expect(third_section.items.first.definition).to be_kind_of(DataStructures::Definition::DateField)
+    expect(third_section.items.second.definition).to be_kind_of(DataStructures::Definition::SignatureField)
   end
 end
