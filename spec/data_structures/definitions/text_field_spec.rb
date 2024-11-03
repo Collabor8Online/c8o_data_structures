@@ -17,7 +17,7 @@ module DataStructures
         end
       end
 
-      describe "managing items" do
+      describe "item value" do
         subject(:item) { described_class.new caption: "Some field", default: "BOOM" }
 
         it_behaves_like "a field", legal_values: ["some text", "some other text", 123, Date.today], default: "BOOM"

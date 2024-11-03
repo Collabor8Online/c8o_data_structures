@@ -33,6 +33,12 @@ module DataStructures
           expect(described_class.new(caption: "Not allowed", default: 123.45).default).to eq 123
           expect(described_class.new(caption: "Not allowed", default: "not an integer").default).to eq 0
         end
+
+        describe "item value" do
+          subject(:item) { described_class.new caption: "Some field", default: 123 }
+
+          it_behaves_like "a field", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today, 45.99], default: 123
+        end
       end
 
       describe "#minimum" do
@@ -48,6 +54,12 @@ module DataStructures
           expect(described_class.new(caption: "Not allowed", minimum: 123.45).minimum).to eq 123
           expect(described_class.new(caption: "Not allowed", minimum: "not an integer").minimum).to eq 0
         end
+
+        describe "item value" do
+          subject(:item) { described_class.new caption: "Some field", minimum: 100 }
+
+          it_behaves_like "a field", legal_values: [100, 101, 102], illegal_values: [-1, 0, 99]
+        end
       end
 
       describe "#maximum" do
@@ -62,6 +74,12 @@ module DataStructures
         it "coerces non-integer values" do
           expect(described_class.new(caption: "Not allowed", maximum: 123.45).maximum).to eq 123
           expect(described_class.new(caption: "Not allowed", maximum: "not an integer").maximum).to eq 0
+        end
+
+        describe "item value" do
+          subject(:item) { described_class.new caption: "Some field", maximum: 100 }
+
+          it_behaves_like "a field", legal_values: [-1, 99, 100], illegal_values: [101, 102, 103]
         end
       end
     end
