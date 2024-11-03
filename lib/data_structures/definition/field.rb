@@ -10,11 +10,11 @@ module DataStructures
 
       def required? = required
 
-      def validate_item(item)= self.class.validator&.call(item)
+      def validate_item(item)= self.class.validator&.call(item, self)
 
-      def set_value_for(item, value) = self.class.setter.nil? ? set_item_data_value(item, value) : self.class.setter.call(item, value)
+      def set_value_for(item, value) = self.class.setter.nil? ? set_item_data_value(item, value) : self.class.setter.call(item, value, self)
 
-      def get_value_for(item) = self.class.getter.nil? ? get_item_data_value(item) : self.class.getter.call(item)
+      def get_value_for(item) = self.class.getter.nil? ? get_item_data_value(item) : self.class.getter.call(item, self)
 
       class << self
         attr_reader :validator, :setter, :getter
