@@ -75,6 +75,10 @@ module DataStructures
             expect(configuration.class_for(:number).value).to eq DataStructures::Definition::NumberField
           end
 
+          it "pre-registers decimal fields" do
+            expect(configuration.class_for(:decimal).value).to eq DataStructures::Definition::DecimalField
+          end
+
           it "pre-registers date fields" do
             expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
           end
