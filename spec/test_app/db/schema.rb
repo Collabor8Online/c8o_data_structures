@@ -49,7 +49,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_31_164132) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "data_structures_items", force: :cascade do |t|
+  create_table "data_structures_fields", force: :cascade do |t|
     t.string "container_type"
     t.integer "container_id"
     t.string "ancestry"

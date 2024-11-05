@@ -6,10 +6,10 @@ module DataStructures
     RSpec.describe DecimalField do
       it_behaves_like "a field", legal_values: [-1000.0, 0.0, 1000.0], illegal_values: ["some text", Date.today]
 
-      describe "item value" do
-        subject(:item) { described_class.new caption: "Some field" }
+      describe "field value" do
+        subject(:definition) { described_class.new caption: "Some field" }
         let(:container) { Form.new }
-        let(:field) { item.create_item container: container, definition: subject }
+        let(:field) { definition.create_field container: container, definition: subject }
 
         it "is stored as a float" do
           field.value = 99.00
@@ -51,9 +51,9 @@ module DataStructures
         end
 
         describe "item value" do
-          subject(:item) { described_class.new caption: "Some field", default: 123.0 }
+          subject(:definition) { described_class.new caption: "Some field", default: 123.0 }
           let(:container) { Form.new }
-          let(:field) { item.create_item container: container, definition: subject }
+          let(:field) { definition.create_field container: container, definition: subject }
 
           it_behaves_like "a field", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today], default: 123.0
         end
@@ -73,8 +73,8 @@ module DataStructures
           expect(described_class.new(caption: "Not allowed", minimum: "not a float").minimum).to eq 0.0
         end
 
-        describe "item value" do
-          subject(:item) { described_class.new caption: "Some field", minimum: 100.0 }
+        describe "field value" do
+          subject(:definition) { described_class.new caption: "Some field", minimum: 100.0 }
 
           it_behaves_like "a field", legal_values: [100.0, 101.0, 102.0], illegal_values: [-1.0, 0.0, 99.999]
         end
@@ -95,7 +95,7 @@ module DataStructures
         end
 
         describe "item" do
-          subject(:item) { described_class.new caption: "Some field", maximum: 100.0 }
+          subject(:definition) { described_class.new caption: "Some field", maximum: 100.0 }
 
           it_behaves_like "a field", legal_values: [-1.99, 99.99, 100.0], illegal_values: [101.0, 102.0, 103.0]
         end

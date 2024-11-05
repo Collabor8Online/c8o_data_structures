@@ -1,4 +1,4 @@
 module DataStructures
-  class Group < Item
+  class Group < Field
   end
 end

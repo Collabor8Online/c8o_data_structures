@@ -6,14 +6,14 @@ module DataStructures
     let(:container) { Form.create(person: alice, name: "My form") }
     let(:definition_configuration) { {type: "repeating_group", group_items: [{type: "text", caption: "What is your name?", required: true}, {type: "text", caption: "What is your favourite ice cream?", required: false}]} }
 
-    describe "#create_item" do
+    describe "#create_field" do
       subject(:repeating_group) { described_class.new container: container, definition_configuration: definition_configuration }
 
-      it "creates an item for the repeating group, one for the first group within it and one for each of the fields within the group items" do
-        item = repeating_group.definition.create_item(container: container)
-        expect(item.items.size).to eq 1
-        group = item.items.first
-        expect(group.items.size).to eq 2
+      it "creates a field for the repeating group, one for the first group within it and one for each of the fields within the group items" do
+        field = repeating_group.definition.create_field(container: container)
+        expect(field.fields.size).to eq 1
+        group = field.fields.first
+        expect(group.fields.size).to eq 2
       end
     end
 
@@ -22,11 +22,11 @@ module DataStructures
 
       it "adds a group to the repeating group" do
         repeating_group.add_group
-        expect(repeating_group.reload.items.size).to eq 2
-        first_group = repeating_group.items.first
-        expect(first_group.items.size).to eq 2
-        second_group = repeating_group.items.second
-        expect(second_group.items.size).to eq 2
+        expect(repeating_group.reload.groups.size).to eq 2
+        first_group = repeating_group.groups.first
+        expect(first_group.fields.size).to eq 2
+        second_group = repeating_group.groups.second
+        expect(second_group.fields.size).to eq 2
       end
     end
 
@@ -35,18 +35,18 @@ module DataStructures
 
       it "removes the last group from the repeating group" do
         3.times { repeating_group.add_group }
-        last_group = repeating_group.reload.items.last
+        last_group = repeating_group.reload.groups.last
 
         repeating_group.remove_group
-        expect(repeating_group.reload.items).to_not include(last_group)
+        expect(repeating_group.reload.groups).to_not include(last_group)
       end
 
       it "does not remove the group if there is only one group configured" do
-        last_group = repeating_group.reload.items.last
+        last_group = repeating_group.reload.groups.last
 
         repeating_group.remove_group
-        expect(repeating_group.reload.items.size).to eq 1
-        expect(repeating_group.items).to include(last_group)
+        expect(repeating_group.reload.groups.size).to eq 1
+        expect(repeating_group.groups).to include(last_group)
       end
     end
   end

@@ -13,15 +13,18 @@ module DataStructures
 
     def get_value_for(item)= nil
 
-    def create_item(**params)
-      self.class.item_creator.nil? ? DataStructures::Item.create!({definition: self}.merge(params)) : self.class.item_creator.call({definition: self}.merge(params))
+    def build_field(**params) = self.class.field_class_name.constantize.new({definition: self}.merge(params))
+
+    def create_field(**params)
+      build_field(**params).tap do |field|
+        field.save
+      end
     end
 
     class << self
-      def on_create_item &block
-        @item_creator = block
-      end
-      attr_reader :item_creator
+      attr_writer :field_class_name
+
+      def field_class_name = @field_class_name ||= "DataStructures::Field"
 
       def load config
         config = convert_json(config) if config.is_a? String

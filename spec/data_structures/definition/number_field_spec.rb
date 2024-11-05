@@ -9,7 +9,7 @@ module DataStructures
       describe "item value" do
         subject(:item) { described_class.new caption: "Some field" }
         let(:container) { Form.new }
-        let(:field) { item.create_item container: container, definition: subject }
+        let(:field) { item.create_field container: container, definition: subject }
 
         it "is stored as an integer" do
           field.value = 99

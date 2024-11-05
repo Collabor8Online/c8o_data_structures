@@ -2,15 +2,13 @@ require_relative "group"
 module DataStructures
   class Definition
     class RepeatingGroup < DataStructures::Definition
+      self.field_class_name = "DataStructures::RepeatingGroup"
+
       attr_reader :group_items
 
       def initialize(group_items: [], **)
         super(**)
         @group_items = load_group_items_from(group_items)
-      end
-
-      on_create_item do |params|
-        DataStructures::RepeatingGroup.create!(**params)
       end
 
       def items = [group]

@@ -3,13 +3,11 @@ require_relative "container"
 module DataStructures
   class Definition
     class Group < Container
+      self.field_class_name = "DataStructures::Group"
+
       def initialize(group_items: [], **)
         super(**)
         @items = group_items
-      end
-
-      on_create_item do |params|
-        DataStructures::Group.create!(**params)
       end
     end
   end

@@ -1,19 +1,19 @@
 require "ancestry"
 
 module DataStructures
-  class Item < ApplicationRecord
+  class Field < ApplicationRecord
     has_ancestry
-    def items = children.order(:position)
+    def fields = children.order(:position)
 
-    def items_attributes=(array_of_params)
-      array_of_params.collect { |param| items.find(param.delete(:id)).update param }
+    def fields_attributes=(array_of_params)
+      array_of_params.collect { |param| fields.find(param.delete(:id)).update param }
     end
 
     belongs_to :container, polymorphic: true
     validate :container do |item|
       item.errors.add :container, :is_not_a_container unless item.container.is_a? DataStructures::Container
     end
-    after_save :create_items_for_definition, if: :saved_change_to_definition_configuration?
+    after_save :create_fields_for_definition, if: :saved_change_to_definition_configuration?
 
     serialize :definition_configuration, type: Hash, coder: JSON
     attribute :definition
@@ -40,14 +40,14 @@ module DataStructures
     has_many_attached :attachment_values
     belongs_to :model, polymorphic: true, optional: true
 
-    def next_position = items.size
+    def next_position = fields.size
 
     private
 
-    def create_items_for_definition
+    def create_fields_for_definition
       return unless definition.respond_to? :items
       definition.items.each_with_index do |item_definition, position|
-        items.find_by(position: position) || item_definition.create_item(position: position, container: container, parent: self, definition: item_definition)
+        fields.find_by(position: position) || item_definition.create_field(position: position, container: container, parent: self, definition: item_definition)
       end
     end
   end

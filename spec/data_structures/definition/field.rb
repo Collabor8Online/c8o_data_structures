@@ -36,20 +36,20 @@ RSpec.shared_examples "a field" do |default: nil, legal_values: [], illegal_valu
 
   describe "validity" do
     let(:container) { Form.new }
-    let(:item) { subject.create_item container: container, definition: subject }
+    let(:field) { subject.build_field container: container, definition: subject }
 
     it "is valid if given legal values" do
       legal_values.each do |value|
-        item.value = value
-        expect(item).to be_valid
+        field.value = value
+        expect(field).to be_valid
       end
     end
 
     it "is invalid if given illegal values" do
       illegal_values.each do |value|
-        item.value = value
-        expect(item).to_not be_valid
-        expect(item.errors).to include(:value)
+        field.value = value
+        expect(field).to_not be_valid
+        expect(field.errors).to include(:value)
       end
     end
 
@@ -61,10 +61,10 @@ RSpec.shared_examples "a field" do |default: nil, legal_values: [], illegal_valu
           end
 
           it "is invalid" do
-            item = DataStructures::Item.create container: container, definition: subject
+            field = subject.create_field(container: container)
 
-            expect(item).to_not be_valid
-            expect(item.errors).to include(:value)
+            expect(field).to_not be_valid
+            expect(field.errors).to include(:value)
           end
         end
 
@@ -74,9 +74,9 @@ RSpec.shared_examples "a field" do |default: nil, legal_values: [], illegal_valu
           end
 
           it "is valid" do
-            item = DataStructures::Item.create container: container, definition: subject
+            field = subject.build_field(container: container)
 
-            expect(item).to be_valid
+            expect(field).to be_valid
           end
         end
       end
@@ -85,7 +85,7 @@ RSpec.shared_examples "a field" do |default: nil, legal_values: [], illegal_valu
 
   describe "value" do
     let(:container) { Form.new }
-    let(:item) { DataStructures::Item.create! container: container, definition: subject }
+    let(:item) { DataStructures::Field.create! container: container, definition: subject }
 
     it "sets and reads the values of the item" do
       legal_values.each do |value|
