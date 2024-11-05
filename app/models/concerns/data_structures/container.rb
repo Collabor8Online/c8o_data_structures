@@ -8,12 +8,6 @@ module DataStructures
       accepts_nested_attributes_for :fields
     end
 
-    def fields= params
-      fields = params.delete(:fields)
-      update params
-      fields.collect { |param| fields.find(param.delete(:_id)).fields = param }
-    end
-
     def create_fields_for definition
       _fields.destroy_all
       definition.items.each_with_index do |item_definition, position|
