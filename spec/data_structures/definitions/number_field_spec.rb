@@ -6,6 +6,28 @@ module DataStructures
     RSpec.describe NumberField do
       it_behaves_like "a field"
 
+      describe "item value" do
+        subject(:item) { described_class.new caption: "Some field" }
+        let(:container) { Form.new }
+        let(:field) { item.create_item container: container, definition: subject }
+
+        it_behaves_like "a field", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today]
+
+        it "creates a standard Item field" do
+          expect(field).to be_kind_of(DataStructures::Item)
+        end
+
+        it "is stored as an integer" do
+          field.value = 99
+          expect(field.data["value"]).to eq 99
+        end
+
+        it "converts float values to integers" do
+          field.value = 45.99
+          expect(field.data["value"]).to eq 45
+        end
+      end
+
       describe ".new" do
         it "sets the default value" do
           expect(described_class.new(caption: "How many fingers am I holding up?", default: 4).default).to eq 4
