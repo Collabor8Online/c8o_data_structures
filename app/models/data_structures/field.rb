@@ -5,8 +5,8 @@ module DataStructures
     has_ancestry
     def fields = children.order(:position)
 
-    def fields_attributes=(array_of_params)
-      array_of_params.collect { |param| fields.find(param.delete(:id)).update param }
+    def fields_attributes=(params)
+      params.values.collect { |param| fields.find(param.delete(:id)).update param }
     end
 
     belongs_to :container, polymorphic: true

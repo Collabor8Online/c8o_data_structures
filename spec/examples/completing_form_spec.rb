@@ -50,20 +50,23 @@ RSpec.describe "Completing a form" do
     reason_for_order_field = group.fields.third
     signature_field = third_section.fields.second
 
-    form.update! fields_attributes: [
-      {id: first_section.id, fields_attributes: [
-        {id: name_field.id, value: "Alice Aardvark"}
-      ]},
-      {id: second_section.id, fields_attributes: [
-        {id: repeating_group.id, fields_attributes: [
-          {id: group.id, fields_attributes: [
-            {id: item_to_order_field.id, value: "Widgets"}, {id: quantity_field.id, value: "200"}, {id: reason_for_order_field.id, value: "We need widgets"}
-          ]}
-        ]}
-      ]}, {id: third_section.id, fields_attributes: [
-        {id: signature_field.id, value: "FAKE SIGNATURE"}
-      ]}
-    ]
+    form.update! fields_attributes: {
+      "0" => {id: first_section.id, fields_attributes: {
+        "0" => {id: name_field.id, value: "Alice Aardvark"}
+      }},
+      "1" => {id: second_section.id, fields_attributes: {
+        "0" => {id: repeating_group.id, fields_attributes: {
+          "0" => {id: group.id, fields_attributes: {
+            "0" => {id: item_to_order_field.id, value: "Widgets"},
+            "1" => {id: quantity_field.id, value: "200"},
+            "2" => {id: reason_for_order_field.id, value: "We need widgets"}
+          }}
+        }}
+      }},
+      "2" => {id: third_section.id, fields_attributes: {
+        "0" => {id: signature_field.id, value: "FAKE SIGNATURE"}
+      }}
+    }
 
     expect(name_field.reload.value).to eq "Alice Aardvark"
     expect(item_to_order_field.reload.value).to eq "Widgets"
@@ -71,7 +74,7 @@ RSpec.describe "Completing a form" do
     expect(reason_for_order_field.reload.value.to_plain_text).to eq "We need widgets"
   end
 
-  it "adds an extra repeat to a repeating group" do
+  it "adds an extra group to a repeating group" do
     form.create_fields_for template
 
     repeating_group.add_group
@@ -82,25 +85,32 @@ RSpec.describe "Completing a form" do
     name_field = first_section.fields.third
     signature_field = third_section.fields.second
 
-    form.update! fields_attributes: [
-      {id: first_section.id, fields_attributes: [
-        {id: name_field.id, value: "Alice Aardvark"}
-      ]},
-      {id: second_section.id, fields_attributes: [
-        {id: repeating_group.id, fields_attributes: [
-          {id: group.id, fields_attributes: [
-            {id: group.fields.first.id, value: "Widgets"}, {id: group.fields.second.id, value: "200"}, {id: group.fields.third.id, value: "We need widgets"}
-          ]},
-          {id: second_group.id, fields_attributes: [
-            {id: second_group.fields.first.id, value: "Sprockets"}, {id: second_group.fields.second.id, value: "10"}, {id: second_group.fields.third.id, value: "We need sprockets"}
-          ]},
-          {id: third_group.id, fields_attributes: [
-            {id: third_group.fields.first.id, value: "Grommets"}, {id: third_group.fields.second.id, value: "99"}, {id: third_group.fields.third.id, value: "We need grommets"}
-          ]}
-        ]}
-      ]}, {id: third_section.id, fields_attributes: [
-        {id: signature_field.id, value: "FAKE SIGNATURE"}
-      ]}
-    ]
+    form.update! fields_attributes: {
+      "0" => {id: first_section.id, fields_attributes: {
+        "0" => {id: name_field.id, value: "Alice Aardvark"}
+      }},
+      "1" => {id: second_section.id, fields_attributes: {
+        "0" => {id: repeating_group.id, fields_attributes: {
+          "0" => {id: group.id, fields_attributes: {
+            "0" => {id: group.fields.first.id, value: "Widgets"},
+            "1" => {id: group.fields.second.id, value: "200"},
+            "2" => {id: group.fields.third.id, value: "We need widgets"}
+          }},
+          "1" => {id: second_group.id, fields_attributes: {
+            "0" => {id: second_group.fields.first.id, value: "Sprockets"},
+            "1" => {id: second_group.fields.second.id, value: "10"},
+            "2" => {id: second_group.fields.third.id, value: "We need sprockets"}
+          }},
+          "2" => {id: third_group.id, fields_attributes: {
+            "0" => {id: third_group.fields.first.id, value: "Grommets"},
+            "1" => {id: third_group.fields.second.id, value: "99"},
+            "2" => {id: third_group.fields.third.id, value: "We need grommets"}
+          }}
+        }}
+      }},
+      "2" => {id: third_section.id, fields_attributes: {
+        "0" => {id: signature_field.id, value: "FAKE SIGNATURE"}
+      }}
+    }
   end
 end
