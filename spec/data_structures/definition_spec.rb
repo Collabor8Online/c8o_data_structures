@@ -7,6 +7,15 @@ module DataStructures
   # standard:enable Lint/ConstantDefinitionInBlock
 
   RSpec.describe Definition do
+    describe "#create_item" do
+      subject(:definition) { described_class.new }
+      let(:container) { Form.new }
+
+      it "creates an item of the given type" do
+        expect(definition.create_item(container: container)).to be_kind_of(DataStructures::Item)
+      end
+    end
+
     describe ".load" do
       subject(:definition) { described_class }
 

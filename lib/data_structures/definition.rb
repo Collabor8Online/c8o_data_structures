@@ -13,7 +13,7 @@ module DataStructures
 
     def get_value_for(item)= nil
 
-    def create_item(**) = DataStructures::Item.create!(**)
+    def create_item(**params) = DataStructures::Item.create!({definition: self}.merge(params))
 
     class << self
       def load config
