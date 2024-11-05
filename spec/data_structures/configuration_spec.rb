@@ -51,6 +51,10 @@ module DataStructures
             expect(configuration.class_for(:repeating_group).value).to eq DataStructures::Definition::RepeatingGroup
           end
 
+          it "pre-registers repeats" do
+            expect(configuration.class_for(:repeat).value).to eq DataStructures::Definition::Repeat
+          end
+
           it "pre-registers headings" do
             expect(configuration.class_for(:heading).value).to eq DataStructures::Definition::Heading
           end

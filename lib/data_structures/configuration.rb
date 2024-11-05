@@ -26,6 +26,7 @@ module DataStructures
       template: "DataStructures::Definition::Template",
       section: "DataStructures::Definition::Section",
       repeating_group: "DataStructures::Definition::RepeatingGroup",
+      repeat: "DataStructures::Definition::Repeat",
       heading: "DataStructures::Definition::Heading",
       sub_heading: "DataStructures::Definition::SubHeading",
       text: "DataStructures::Definition::TextField",

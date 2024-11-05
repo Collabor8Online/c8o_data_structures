@@ -4,7 +4,15 @@ module DataStructures
 
     included do
       has_many :_items, as: :container, class_name: "DataStructures::Item", dependent: :destroy_async
-      has_many :items, -> { roots.order :position }, as: :container, class_name: "DataStructures::Item"
+      has_many :items, -> { roots.order(:position) }, class_name: "DataStructures::Item", as: :container
+      accepts_nested_attributes_for :items
+    end
+
+    def items= params
+      puts "#{self.class}:#{id} - #{params}"
+      items = params.delete(:items)
+      update params
+      items.collect { |param| items.find(param.delete(:_id)).items = param }
     end
 
     def create_items_for definition
