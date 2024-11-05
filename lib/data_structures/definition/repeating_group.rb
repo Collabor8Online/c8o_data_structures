@@ -9,11 +9,13 @@ module DataStructures
         @group_items = load_group_items_from(group_items)
       end
 
+      on_create_item do |params|
+        DataStructures::RepeatingGroup.create!(**params)
+      end
+
       def items = [Repeat.new(group_items: group_items)]
 
       def to_h = super.merge("group_items" => group_items.map(&:to_h))
-
-      def create_item(**) = DataStructures::RepeatingGroup.create!(**)
 
       private
 

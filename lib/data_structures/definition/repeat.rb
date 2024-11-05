@@ -8,7 +8,9 @@ module DataStructures
         @items = group_items
       end
 
-      def create_item(**) = DataStructures::Repeat.create!(**)
+      on_create_item do |params|
+        DataStructures::Repeat.create!(**params)
+      end
     end
   end
 end
