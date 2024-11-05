@@ -1,4 +1,4 @@
 module DataStructures
-  class Repeat < Item
+  class Group < Item
   end
 end
