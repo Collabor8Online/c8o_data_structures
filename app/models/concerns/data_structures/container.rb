@@ -3,14 +3,21 @@ module DataStructures
     extend ActiveSupport::Concern
 
     included do
-      has_many :_items, as: :container, class_name: "DataStructures::Item", dependent: :destroy_async
-      has_many :items, -> { roots.order :position }, as: :container, class_name: "DataStructures::Item"
+      has_many :_fields, as: :container, class_name: "DataStructures::Field", dependent: :destroy_async
+      has_many :fields, -> { roots.order(:position) }, class_name: "DataStructures::Field", as: :container
+      accepts_nested_attributes_for :fields
     end
 
-    def create_items_for definition
-      items.where(position: definition.items.size..).destroy_all
-      definition.items.each_with_index do |item, position|
-        items.where(position: position).first_or_initialize.update! container: self, definition: item
+    def fields= params
+      fields = params.delete(:fields)
+      update params
+      fields.collect { |param| fields.find(param.delete(:_id)).fields = param }
+    end
+
+    def create_fields_for definition
+      _fields.destroy_all
+      definition.items.each_with_index do |item_definition, position|
+        fields.find_by(position: position) || item_definition.create_field(position: position, container: self, definition: item_definition)
       end
     end
   end

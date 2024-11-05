@@ -17,7 +17,7 @@ items:
       - type: heading
         text: Order details
       - type: repeating_group
-        items:
+        group_items:
           - type: text
             caption: Item to order
             required: true 

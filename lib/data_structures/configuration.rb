@@ -26,11 +26,13 @@ module DataStructures
       template: "DataStructures::Definition::Template",
       section: "DataStructures::Definition::Section",
       repeating_group: "DataStructures::Definition::RepeatingGroup",
+      group: "DataStructures::Definition::Group",
       heading: "DataStructures::Definition::Heading",
       sub_heading: "DataStructures::Definition::SubHeading",
       text: "DataStructures::Definition::TextField",
       rich_text: "DataStructures::Definition::RichTextField",
       number: "DataStructures::Definition::NumberField",
+      decimal: "DataStructures::Definition::DecimalField",
       date: "DataStructures::Definition::DateField",
       signature: "DataStructures::Definition::SignatureField"
     }.freeze

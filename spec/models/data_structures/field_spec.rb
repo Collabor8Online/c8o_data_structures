@@ -1,7 +1,7 @@
 require "rails_helper"
 
 module DataStructures
-  RSpec.describe Item, type: :model do
+  RSpec.describe Field, type: :model do
     let(:alice) { Person.create(first_name: "Alice", last_name: "Aardvark") }
     let(:container) { Form.create(person: alice, name: "My form") }
     let(:definition_configuration) { {"type" => "text", "caption" => "What's your name?", "required" => true, "default" => "Alice"} }
@@ -47,18 +47,18 @@ module DataStructures
     end
 
     describe "#definition - nested Definition" do
-      subject(:item) { described_class.create! container: container, definition: definition }
+      subject(:field) { described_class.create! container: container, definition: definition }
       let(:definition) { DataStructures::Definition.load("type" => "section", "items" => [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]) }
 
-      it "creates child items for nested Definition" do
-        expect(item.items.size).to eq 3
-        heading = item.items.first.definition
+      it "creates child fields for nested Definition" do
+        expect(field.fields.size).to eq 3
+        heading = field.fields.first.definition
         expect(heading).to be_kind_of(DataStructures::Definition::Heading)
         expect(heading.text).to eq "Hello"
-        sub_heading = item.items.second.definition
+        sub_heading = field.fields.second.definition
         expect(sub_heading).to be_kind_of(DataStructures::Definition::SubHeading)
         expect(sub_heading.text).to eq "World"
-        text_field = item.items.third.definition
+        text_field = field.fields.third.definition
         expect(text_field).to be_kind_of(DataStructures::Definition::TextField)
         expect(text_field.caption).to eq "What is your name?"
       end
@@ -92,48 +92,48 @@ module DataStructures
       end
     end
 
-    describe "#items" do
-      subject(:item) { described_class.create! container: container, definition_configuration: definition_configuration }
-      let!(:first) { described_class.create! container: container, parent: item, position: 0, definition_configuration: definition_configuration }
-      let!(:second) { described_class.create! container: container, parent: item, position: 1, definition_configuration: definition_configuration }
+    describe "#fields" do
+      subject(:field) { described_class.create! container: container, definition_configuration: definition_configuration }
+      let!(:first) { described_class.create! container: container, parent: field, position: 0, definition_configuration: definition_configuration }
+      let!(:second) { described_class.create! container: container, parent: field, position: 1, definition_configuration: definition_configuration }
 
-      it "returns the child items in order" do
-        expect(item.items).to eq [first, second]
+      it "returns the child fields in order" do
+        expect(field.fields).to eq [first, second]
       end
     end
 
     describe "#data" do
-      subject(:item) { described_class.new }
+      subject(:field) { described_class.new }
 
       it "is empty by default" do
-        expect(item.data).to eq({})
+        expect(field.data).to eq({})
       end
 
       it "can be set to a hash" do
-        item.data = {name: "Alice", age: 42}
+        field.data = {name: "Alice", age: 42}
 
-        expect(item.data).to eq("name" => "Alice", "age" => 42)
+        expect(field.data).to eq("name" => "Alice", "age" => 42)
       end
     end
 
     describe "other data formats" do
-      subject(:item) { described_class.new }
+      subject(:field) { described_class.new }
 
       it "can hold rich text" do
-        expect(item.rich_text_value).to be_kind_of(ActionText::RichText)
+        expect(field.rich_text_value).to be_kind_of(ActionText::RichText)
       end
 
       it "can hold a single file attachment" do
-        expect(item.attachment_value).to be_kind_of(ActiveStorage::Attached::One)
+        expect(field.attachment_value).to be_kind_of(ActiveStorage::Attached::One)
       end
 
       it "can hold multiple file attachments" do
-        expect(item.attachment_values).to be_kind_of(ActiveStorage::Attached::Many)
+        expect(field.attachment_values).to be_kind_of(ActiveStorage::Attached::Many)
       end
 
       it "can reference another model" do
-        item.model = alice
-        expect(item.model).to eq alice
+        field.model = alice
+        expect(field.model).to eq alice
       end
     end
   end

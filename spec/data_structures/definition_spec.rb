@@ -7,6 +7,40 @@ module DataStructures
   # standard:enable Lint/ConstantDefinitionInBlock
 
   RSpec.describe Definition do
+    describe "#build_field" do
+      subject(:definition) { described_class.new }
+      let(:container) { Form.new }
+
+      it "builds a field of the given type" do
+        field = definition.build_field(container: container)
+        expect(field).to be_kind_of(DataStructures::Field)
+        expect(field).to_not be_persisted
+      end
+    end
+
+    describe "#create_field" do
+      subject(:definition) { described_class.new }
+      let(:container) { Form.new }
+
+      it "creates a field of the given type" do
+        field = definition.create_field(container: container)
+        expect(field).to be_kind_of(DataStructures::Field)
+        expect(field).to be_persisted
+      end
+    end
+
+    describe ".field_class_name" do
+      subject(:definition) { described_class }
+
+      it "registers the class to be used when a field is created" do
+        definition.field_class_name = "DataStructures::Group"
+
+        actual_definition = definition.new
+
+        expect(actual_definition.build_field(data: {some: "value"})).to be_kind_of(DataStructures::Group)
+      end
+    end
+
     describe ".load" do
       subject(:definition) { described_class }
 

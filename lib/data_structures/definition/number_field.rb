@@ -14,6 +14,12 @@ module DataStructures
         options[:less_than_or_equal_to] = definition.maximum if definition.maximum
         ActiveModel::Validations::NumericalityValidator.new(options).validate(item)
       end
+
+      on_set_value do |item, value|
+        item.data["value"] = Integer(value)
+      rescue
+        item.data["value"] = value
+      end
     end
   end
 end
