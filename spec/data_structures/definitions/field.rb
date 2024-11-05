@@ -36,7 +36,7 @@ RSpec.shared_examples "a field" do |default: nil, legal_values: [], illegal_valu
 
   describe "validity" do
     let(:container) { Form.new }
-    let(:item) { DataStructures::Item.new container: container, definition: subject }
+    let(:item) { subject.create_item container: container, definition: subject }
 
     it "is valid if given legal values" do
       legal_values.each do |value|

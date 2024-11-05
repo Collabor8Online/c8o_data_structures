@@ -36,8 +36,20 @@ module DataStructures
 
         describe "item value" do
           subject(:item) { described_class.new caption: "Some field", default: 123 }
+          let(:container) { Form.new }
+          let(:field) { item.create_item container: container, definition: subject }
 
-          it_behaves_like "a field", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today, 45.99], default: 123
+          it_behaves_like "a field", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today], default: 123
+
+          it "is stored as an integer" do
+            field.value = 99
+            expect(field.data["value"]).to eq 99
+          end
+
+          it "converts float values to integers" do
+            field.value = 45.99
+            expect(field.data["value"]).to eq 45
+          end
         end
       end
 
