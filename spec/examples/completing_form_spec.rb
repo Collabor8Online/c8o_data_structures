@@ -74,9 +74,9 @@ RSpec.describe "Completing a form" do
   it "adds an extra repeat to a repeating group" do
     form.create_items_for template
 
-    repeating_group.add_repeat
+    repeating_group.add_group
     second_repeat = repeating_group.items.second
-    repeating_group.add_repeat
+    repeating_group.add_group
     third_repeat = repeating_group.items.third
 
     name_field = first_section.items.third

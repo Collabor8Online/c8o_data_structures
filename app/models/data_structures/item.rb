@@ -3,12 +3,9 @@ require "ancestry"
 module DataStructures
   class Item < ApplicationRecord
     has_ancestry
-    attribute :items
     def items = children.order(:position)
 
     def items_attributes=(array_of_params)
-      puts "#{id} - #{array_of_params}"
-      puts definition_configuration
       array_of_params.collect { |param| items.find(param.delete(:id)).update param }
     end
 
@@ -42,6 +39,8 @@ module DataStructures
     has_one_attached :attachment_value
     has_many_attached :attachment_values
     belongs_to :model, polymorphic: true, optional: true
+
+    def next_position = items.size
 
     private
 

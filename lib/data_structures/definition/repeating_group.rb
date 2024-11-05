@@ -1,4 +1,4 @@
-require_relative "repeat"
+require_relative "group"
 module DataStructures
   class Definition
     class RepeatingGroup < DataStructures::Definition
@@ -13,7 +13,9 @@ module DataStructures
         DataStructures::RepeatingGroup.create!(**params)
       end
 
-      def items = [Repeat.new(group_items: group_items)]
+      def items = [group]
+
+      def group = @group ||= Group.new(group_items: group_items)
 
       def to_h = super.merge("group_items" => group_items.map(&:to_h))
 

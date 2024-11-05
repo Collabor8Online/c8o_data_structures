@@ -29,7 +29,7 @@ module DataStructures
 
         expect(repeating_group.items.size).to eq 1
         repeat = repeating_group.items.first
-        expect(repeat).to be_kind_of(DataStructures::Definition::Repeat)
+        expect(repeat).to be_kind_of(DataStructures::Definition::Group)
 
         expect(repeat.items.size).to eq 2
         expect(repeat.items.first).to be_kind_of(DataStructures::Definition::TextField)
