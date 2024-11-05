@@ -16,6 +16,20 @@ module DataStructures
       end
     end
 
+    describe ".on_create_item" do
+      subject(:definition) { described_class }
+
+      it "registers a block to be called when an item is created" do
+        definition.on_create_item do |params|
+          params
+        end
+
+        actual_definition = definition.new
+
+        expect(actual_definition.create_item(some: "value")).to eq(definition: actual_definition, some: "value")
+      end
+    end
+
     describe ".load" do
       subject(:definition) { described_class }
 

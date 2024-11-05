@@ -13,9 +13,16 @@ module DataStructures
 
     def get_value_for(item)= nil
 
-    def create_item(**params) = DataStructures::Item.create!({definition: self}.merge(params))
+    def create_item(**params)
+      self.class.item_creator.nil? ? DataStructures::Item.create!({definition: self}.merge(params)) : self.class.item_creator.call({definition: self}.merge(params))
+    end
 
     class << self
+      def on_create_item &block
+        @item_creator = block
+      end
+      attr_reader :item_creator
+
       def load config
         config = convert_json(config) if config.is_a? String
         config = config.transform_keys(&:to_sym).except(:version)
