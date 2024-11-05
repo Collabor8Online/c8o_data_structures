@@ -39,7 +39,6 @@ RSpec.describe "Building containers" do
 
     it "defines a template with a repeating group" do
       template = DataStructures::Definition.load order_form
-
       expect(template.name).to eq "Order form"
       expect(template.items.size).to eq 4
 
@@ -51,8 +50,8 @@ RSpec.describe "Building containers" do
       expect(form.items.fourth.definition).to be_kind_of(DataStructures::Definition::SignatureField)
 
       repeating_group = form.items.second
-      expect(repeating_group.items.size).to eq 1
       repeat = repeating_group.items.first
+      expect(repeat.items.size).to eq 3
       expect(repeat.items.first.definition).to be_kind_of(DataStructures::Definition::TextField)
       expect(repeat.items.second.definition).to be_kind_of(DataStructures::Definition::NumberField)
       expect(repeat.items.third.definition).to be_kind_of(DataStructures::Definition::RichTextField)
@@ -96,15 +95,17 @@ RSpec.describe "Building containers" do
       expect(header.items.second.definition).to be_kind_of(DataStructures::Definition::SubHeading)
       expect(header.items.third.definition).to be_kind_of(DataStructures::Definition::TextField)
 
-      order_form = form.items.first
+      order_form = form.items.second
       expect(order_form.items.size).to eq 2
-      expect(order_form.items.first.definition).to be_kind_of(DataStructures::Definition::Heading)
-      expect(order_form.items.second.definition).to be_kind_of(DataStructures::Definition::RepeatingGroup)
-      order_items = order_Form.items.second
-      expect(order_items.items.size).to eq 3
-      expect(order_items.items.first.definition).to be_kind_of(DataStructures::Definition::TextField)
-      expect(order_items.items.second.definition).to be_kind_of(DataStructures::Definition::NumberField)
-      expect(order_items.items.third.definition).to be_kind_of(DataStructures::Definition::RichTextField)
+      header = order_form.items.first
+      expect(header.definition).to be_kind_of(DataStructures::Definition::Heading)
+      order_items = order_form.items.second
+      expect(order_items.definition).to be_kind_of(DataStructures::Definition::RepeatingGroup)
+      order_item = order_items.items.first
+      expect(order_item.items.size).to eq 3
+      expect(order_item.items.first.definition).to be_kind_of(DataStructures::Definition::TextField)
+      expect(order_item.items.second.definition).to be_kind_of(DataStructures::Definition::NumberField)
+      expect(order_item.items.third.definition).to be_kind_of(DataStructures::Definition::RichTextField)
 
       footer = form.items.third
       expect(footer.items.size).to eq 2

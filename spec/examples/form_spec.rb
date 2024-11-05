@@ -27,10 +27,11 @@ RSpec.describe "Form" do
     expect(second_section.items.second.definition).to be_kind_of(DataStructures::Definition::RepeatingGroup)
 
     repeating_group = second_section.items.second
-    expect(repeating_group.items.size).to eq 3
-    expect(repeating_group.items.first.definition).to be_kind_of(DataStructures::Definition::TextField)
-    expect(repeating_group.items.second.definition).to be_kind_of(DataStructures::Definition::NumberField)
-    expect(repeating_group.items.third.definition).to be_kind_of(DataStructures::Definition::RichTextField)
+    repeat = repeating_group.items.first
+    expect(repeat.items.size).to eq 3
+    expect(repeat.items.first.definition).to be_kind_of(DataStructures::Definition::TextField)
+    expect(repeat.items.second.definition).to be_kind_of(DataStructures::Definition::NumberField)
+    expect(repeat.items.third.definition).to be_kind_of(DataStructures::Definition::RichTextField)
 
     expect(third_section.definition).to be_kind_of(DataStructures::Definition::Section)
     expect(third_section.items.size).to eq 2

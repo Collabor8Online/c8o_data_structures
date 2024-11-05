@@ -3,6 +3,7 @@ class CreateDataStructuresItems < ActiveRecord::Migration[8.0]
     create_table :data_structures_items, if_not_exists: true do |t|
       t.belongs_to :container, polymorphic: true
       t.string :ancestry
+      t.string :type
       t.text :definition_configuration
       t.integer :position, null: false, default: 0
       t.text :data

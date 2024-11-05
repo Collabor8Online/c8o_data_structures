@@ -53,6 +53,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_31_164132) do
     t.string "container_type"
     t.integer "container_id"
     t.string "ancestry"
+    t.string "type"
     t.text "definition_configuration"
     t.integer "position", default: 0, null: false
     t.text "data"

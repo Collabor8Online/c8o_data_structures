@@ -40,9 +40,8 @@ module DataStructures
 
     def create_items_for_definition
       return unless definition.respond_to? :items
-      items.where(position: definition.items.size..).destroy_all
-      definition.items.each_with_index do |item, position|
-        items.where(position: position).first_or_initialize.update! container: container, parent: self, definition: item
+      definition.items.each_with_index do |item_definition, position|
+        items.find_by(position: position) || item_definition.create_item(position: position, container: container, parent: self, definition: item_definition)
       end
     end
   end

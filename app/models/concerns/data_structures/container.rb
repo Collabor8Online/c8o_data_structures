@@ -8,9 +8,9 @@ module DataStructures
     end
 
     def create_items_for definition
-      items.where(position: definition.items.size..).destroy_all
-      definition.items.each_with_index do |item, position|
-        items.where(position: position).first_or_initialize.update! container: self, definition: item
+      _items.destroy_all
+      definition.items.each_with_index do |item_definition, position|
+        items.find_by(position: position) || item_definition.create_item(position: position, container: self, definition: item_definition)
       end
     end
   end

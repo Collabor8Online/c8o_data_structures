@@ -4,9 +4,7 @@ module DataStructures
     include ActiveModel::Attributes
 
     def to_h
-      as_json["attributes"].merge("type" => DataStructures.type_for(self.class)).tap do |config|
-        config["items"] = items.map { |item| item.to_h } if respond_to? :items
-      end
+      as_json["attributes"].merge("type" => DataStructures.type_for(self.class))
     end
 
     def validate_item(item)= true
@@ -14,6 +12,8 @@ module DataStructures
     def set_value_for(item, value)= nil
 
     def get_value_for(item)= nil
+
+    def create_item(**) = DataStructures::Item.create!(**)
 
     class << self
       def load config
