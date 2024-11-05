@@ -105,6 +105,20 @@ module DataStructures
             expect(configuration.type_for(DataStructures::ConfigurationCustomTemplate).value).to eq "custom_template"
           end
         end
+
+        describe "#registered_types" do
+          it "returns the list of registered types" do
+            expect(configuration.registered_types.value).to include("text")
+            expect(configuration.registered_types.value).to include("number")
+            expect(configuration.registered_types.value).to include("decimal")
+          end
+        end
+
+        describe "#attributes_for" do
+          it "returns the attributes for the given type" do
+            expect(configuration.attributes_for(:text).value).to eq DataStructures::Definition::TextField.attribute_names
+          end
+        end
       end
     end
   end

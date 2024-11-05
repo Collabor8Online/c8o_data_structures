@@ -11,6 +11,10 @@ module DataStructures
 
   def self.type_for(klass) = await { @configuration.type_for klass }
 
+  def self.registered_types = await { @configuration.registered_types }
+
+  def self.attributes_for(type) = await { @configuration.attributes_for(type) }
+
   def self.reset = @configuration.reset
 
   require_relative "data_structures/definition"
