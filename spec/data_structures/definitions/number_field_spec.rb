@@ -4,14 +4,12 @@ require_relative "field"
 module DataStructures
   class Definition
     RSpec.describe NumberField do
-      it_behaves_like "a field"
+      it_behaves_like "a field", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today]
 
       describe "item value" do
         subject(:item) { described_class.new caption: "Some field" }
         let(:container) { Form.new }
         let(:field) { item.create_item container: container, definition: subject }
-
-        it_behaves_like "a field", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today]
 
         it "is stored as an integer" do
           field.value = 99
