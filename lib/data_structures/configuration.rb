@@ -41,6 +41,7 @@ module DataStructures
       date: "DataStructures::Definition::DateField",
       url: "DataStructures::Definition::UrlField",
       email: "DataStructures::Definition::EmailField",
+      phone_number: "DataStructures::Definition::PhoneNumberField",
       signature: "DataStructures::Definition::SignatureField"
     }.freeze
     private_constant :DEFAULT_TYPES

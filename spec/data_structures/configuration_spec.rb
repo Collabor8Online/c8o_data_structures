@@ -108,7 +108,7 @@ module DataStructures
           end
 
           it "pre-registers phone_number fields" do
-            # expect(configuration.class_for(:phone_number).value).to eq DataStructures::Definition::PhoneNumberField
+            expect(configuration.class_for(:phone_number).value).to eq DataStructures::Definition::PhoneNumberField
           end
 
           it "pre-registers geo_location fields" do
