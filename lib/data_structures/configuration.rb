@@ -39,6 +39,7 @@ module DataStructures
       decimal: "DataStructures::Definition::DecimalField",
       currency: "DataStructures::Definition::CurrencyField",
       date: "DataStructures::Definition::DateField",
+      url: "DataStructures::Definition::UrlField",
       signature: "DataStructures::Definition::SignatureField"
     }.freeze
     private_constant :DEFAULT_TYPES
