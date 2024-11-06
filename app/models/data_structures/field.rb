@@ -30,7 +30,7 @@ module DataStructures
     def value=(value)
       definition.set_value_for(self, value)
     end
-    validate :value do |item|
+    validate :value, on: :update do |item|
       definition&.validate_item(item)
     end
 

@@ -36,7 +36,7 @@ RSpec.shared_examples "a field" do |default: nil, legal_values: [], illegal_valu
 
   describe "validity" do
     let(:container) { Form.new }
-    let(:field) { subject.build_field container: container, definition: subject }
+    let(:field) { subject.create_field container: container, definition: subject }
 
     it "is valid if given legal values" do
       legal_values.each do |value|
@@ -85,19 +85,19 @@ RSpec.shared_examples "a field" do |default: nil, legal_values: [], illegal_valu
 
   describe "value" do
     let(:container) { Form.new }
-    let(:item) { DataStructures::Field.create! container: container, definition: subject }
+    let(:field) { subject.create_field(container: container) }
 
     it "sets and reads the values of the item" do
       legal_values.each do |value|
-        item.value = value
-        expect(item.value).to eq value
+        field.value = value
+        expect(field.value).to eq value
       end
     end
 
     if !default.nil?
       context "when configured with a default value" do
         it "returns the default value" do
-          expect(item.value).to eq default
+          expect(field.value).to eq default
         end
       end
     end
