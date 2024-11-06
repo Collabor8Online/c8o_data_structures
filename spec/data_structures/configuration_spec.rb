@@ -104,7 +104,7 @@ module DataStructures
           end
 
           it "pre-registers email fields" do
-            # expect(configuration.class_for(:email).value).to eq DataStructures::Definition::EmailField
+            expect(configuration.class_for(:email).value).to eq DataStructures::Definition::EmailField
           end
 
           it "pre-registers phone_number fields" do

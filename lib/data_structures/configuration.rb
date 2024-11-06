@@ -40,6 +40,7 @@ module DataStructures
       currency: "DataStructures::Definition::CurrencyField",
       date: "DataStructures::Definition::DateField",
       url: "DataStructures::Definition::UrlField",
+      email: "DataStructures::Definition::EmailField",
       signature: "DataStructures::Definition::SignatureField"
     }.freeze
     private_constant :DEFAULT_TYPES
