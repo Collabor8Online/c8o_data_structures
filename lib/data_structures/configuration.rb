@@ -37,6 +37,7 @@ module DataStructures
       rich_text: "DataStructures::Definition::RichTextField",
       number: "DataStructures::Definition::NumberField",
       decimal: "DataStructures::Definition::DecimalField",
+      currency: "DataStructures::Definition::CurrencyField",
       date: "DataStructures::Definition::DateField",
       signature: "DataStructures::Definition::SignatureField"
     }.freeze

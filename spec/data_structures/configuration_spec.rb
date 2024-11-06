@@ -79,6 +79,10 @@ module DataStructures
             expect(configuration.class_for(:decimal).value).to eq DataStructures::Definition::DecimalField
           end
 
+          it "pre-registers currency fields" do
+            expect(configuration.class_for(:currency).value).to eq DataStructures::Definition::CurrencyField
+          end
+
           it "pre-registers date fields" do
             expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
           end
