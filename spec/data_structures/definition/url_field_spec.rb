@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "field"
+require_relative "field_definition"
 
 module DataStructures
   class Definition
@@ -20,7 +20,7 @@ module DataStructures
       describe "item" do
         subject(:item) { described_class.new caption: "Website", default: "https://example.com" }
 
-        it_behaves_like "a field", legal_values: ["https://www.example.com"], illegal_values: ["Not_a_url"], default: "https://example.com"
+        it_behaves_like "a field definition", legal_values: ["https://www.example.com"], illegal_values: ["Not_a_url"], default: "https://example.com"
       end
     end
   end

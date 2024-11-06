@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "field"
+require_relative "field_definition"
 
 module DataStructures
   class Definition
