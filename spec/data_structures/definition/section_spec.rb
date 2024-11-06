@@ -1,10 +1,10 @@
 require "rails_helper"
-require_relative "container"
+require_relative "collection_of_definitions"
 
 module DataStructures
   class Definition
     RSpec.describe Section do
-      it_behaves_like "a container", {}
+      it_behaves_like "a collection of definitions", {}
     end
   end
 end

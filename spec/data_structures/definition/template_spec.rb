@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "container"
+require_relative "collection_of_definitions"
 
 module DataStructures
   class Definition
@@ -11,7 +11,7 @@ module DataStructures
           expect(template.description).to eq "A template for testing"
         end
 
-        it_behaves_like "a container", name: "My template", description: "A template for testing"
+        it_behaves_like "a collection of definitions", name: "My template", description: "A template for testing"
       end
 
       describe "#name" do
