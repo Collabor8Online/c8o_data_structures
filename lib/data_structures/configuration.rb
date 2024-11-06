@@ -37,7 +37,11 @@ module DataStructures
       rich_text: "DataStructures::Definition::RichTextField",
       number: "DataStructures::Definition::NumberField",
       decimal: "DataStructures::Definition::DecimalField",
+      currency: "DataStructures::Definition::CurrencyField",
       date: "DataStructures::Definition::DateField",
+      url: "DataStructures::Definition::UrlField",
+      email: "DataStructures::Definition::EmailField",
+      phone_number: "DataStructures::Definition::PhoneNumberField",
       signature: "DataStructures::Definition::SignatureField"
     }.freeze
     private_constant :DEFAULT_TYPES
