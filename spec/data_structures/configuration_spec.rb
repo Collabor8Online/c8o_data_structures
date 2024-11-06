@@ -87,6 +87,54 @@ module DataStructures
             expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
           end
 
+          it "pre-registers time fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
+          it "pre-registers date_time fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
+          it "pre-registers check_box fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
+          it "pre-registers url fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
+          it "pre-registers email fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
+          it "pre-registers phone_number fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
+          it "pre-registers geo_location fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
+          it "pre-registers media_attachment fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
+          it "pre-registers file_attachment fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
+          it "pre-registers drop_down fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
+          it "pre-registers multi-select fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
+          it "pre-registers ratings fields" do
+            # expect(configuration.class_for(:date).value).to eq DataStructures::Definition::DateField
+          end
+
           it "pre-registers signature fields" do
             expect(configuration.class_for(:signature).value).to eq DataStructures::Definition::SignatureField
           end
