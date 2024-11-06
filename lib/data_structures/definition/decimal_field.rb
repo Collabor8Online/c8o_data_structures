@@ -8,12 +8,11 @@ module DataStructures
       attribute :maximum, :float
       validates_numericality_of :maximum, allow_nil: true
 
-      on_validation do |item, definition|
-        return if !definition.required? && item.value.blank?
+      on_validation do |field, definition|
         options = {attributes: :value}
         options[:greater_than_or_equal_to] = definition.minimum if definition.minimum
         options[:less_than_or_equal_to] = definition.maximum if definition.maximum
-        ActiveModel::Validations::NumericalityValidator.new(options).validate(item)
+        ActiveModel::Validations::NumericalityValidator.new(options).validate(field)
       end
 
       on_set_value do |item, value|
