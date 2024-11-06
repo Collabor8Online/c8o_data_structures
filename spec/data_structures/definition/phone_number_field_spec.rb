@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "field"
+require_relative "field_definition"
 
 module DataStructures
   class Definition
@@ -20,7 +20,7 @@ module DataStructures
       describe "item" do
         subject(:item) { described_class.new caption: "Phone", default: "0123 456789" }
 
-        it_behaves_like "a field", legal_values: ["0123 456789", "+44 7890 123456"], default: "0123 456789"
+        it_behaves_like "a field definition", legal_values: ["0123 456789", "+44 7890 123456"], default: "0123 456789"
       end
     end
   end

@@ -1,10 +1,10 @@
 require "rails_helper"
-require_relative "field"
+require_relative "field_definition"
 
 module DataStructures
   class Definition
     RSpec.describe DecimalField do
-      it_behaves_like "a field", legal_values: [-1000.0, 0.0, 1000.0], illegal_values: ["some text", Date.today]
+      it_behaves_like "a field definition", legal_values: [-1000.0, 0.0, 1000.0], illegal_values: ["some text", Date.today]
 
       describe "field value" do
         subject(:definition) { described_class.new caption: "Some field" }
@@ -55,7 +55,7 @@ module DataStructures
           let(:container) { Form.new }
           let(:field) { definition.create_field container: container, definition: subject }
 
-          it_behaves_like "a field", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today], default: 123.0
+          it_behaves_like "a field definition", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today], default: 123.0
         end
       end
 
@@ -76,7 +76,7 @@ module DataStructures
         describe "field value" do
           subject(:definition) { described_class.new caption: "Some field", minimum: 100.0 }
 
-          it_behaves_like "a field", legal_values: [100.0, 101.0, 102.0], illegal_values: [-1.0, 0.0, 99.999]
+          it_behaves_like "a field definition", legal_values: [100.0, 101.0, 102.0], illegal_values: [-1.0, 0.0, 99.999]
         end
       end
 
@@ -97,7 +97,7 @@ module DataStructures
         describe "item" do
           subject(:definition) { described_class.new caption: "Some field", maximum: 100.0 }
 
-          it_behaves_like "a field", legal_values: [-1.99, 99.99, 100.0], illegal_values: [101.0, 102.0, 103.0]
+          it_behaves_like "a field definition", legal_values: [-1.99, 99.99, 100.0], illegal_values: [101.0, 102.0, 103.0]
         end
       end
     end

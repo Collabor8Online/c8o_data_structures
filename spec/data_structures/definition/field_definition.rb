@@ -1,4 +1,4 @@
-RSpec.shared_examples "a field" do |default: nil, legal_values: [], illegal_values: []|
+RSpec.shared_examples "a field definition" do |default: nil, legal_values: [], illegal_values: []|
   describe ".new" do
     it "sets the caption" do
       field = described_class.new caption: "A caption"

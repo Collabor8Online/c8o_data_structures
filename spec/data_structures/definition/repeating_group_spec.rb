@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "container"
+require_relative "collection_of_definitions"
 
 module DataStructures
   class Definition

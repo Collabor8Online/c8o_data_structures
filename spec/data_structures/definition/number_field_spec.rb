@@ -1,10 +1,10 @@
 require "rails_helper"
-require_relative "field"
+require_relative "field_definition"
 
 module DataStructures
   class Definition
     RSpec.describe NumberField do
-      it_behaves_like "a field", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today]
+      it_behaves_like "a field definition", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today]
 
       describe "item value" do
         subject(:item) { described_class.new caption: "Some field" }
@@ -53,7 +53,7 @@ module DataStructures
         describe "item value" do
           subject(:item) { described_class.new caption: "Some field", default: 123 }
 
-          it_behaves_like "a field", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today], default: 123
+          it_behaves_like "a field definition", legal_values: [-1000, 0, 1000], illegal_values: ["some text", Date.today], default: 123
         end
       end
 
@@ -74,7 +74,7 @@ module DataStructures
         describe "item value" do
           subject(:item) { described_class.new caption: "Some field", minimum: 100 }
 
-          it_behaves_like "a field", legal_values: [100, 101, 102], illegal_values: [-1, 0, 99]
+          it_behaves_like "a field definition", legal_values: [100, 101, 102], illegal_values: [-1, 0, 99]
         end
       end
 
@@ -95,7 +95,7 @@ module DataStructures
         describe "item" do
           subject(:item) { described_class.new caption: "Some field", maximum: 100 }
 
-          it_behaves_like "a field", legal_values: [-1, 99, 100], illegal_values: [101, 102, 103]
+          it_behaves_like "a field definition", legal_values: [-1, 99, 100], illegal_values: [101, 102, 103]
         end
       end
     end

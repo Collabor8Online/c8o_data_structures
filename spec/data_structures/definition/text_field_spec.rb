@@ -1,5 +1,5 @@
 require "rails_helper"
-require_relative "field"
+require_relative "field_definition"
 
 module DataStructures
   class Definition
@@ -20,7 +20,7 @@ module DataStructures
       describe "item" do
         subject(:item) { described_class.new caption: "Some field", default: "BOOM" }
 
-        it_behaves_like "a field", legal_values: ["some text", "some other text", 123, Date.today], default: "BOOM"
+        it_behaves_like "a field definition", legal_values: ["some text", "some other text", 123, Date.today], default: "BOOM"
       end
     end
   end

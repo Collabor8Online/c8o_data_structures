@@ -1,10 +1,10 @@
 require "rails_helper"
-require_relative "field"
+require_relative "field_definition"
 
 module DataStructures
   class Definition
     RSpec.describe DateField do
-      it_behaves_like "a field"
+      it_behaves_like "a field definition"
 
       describe ".new" do
         it "sets the default value" do

@@ -1,4 +1,4 @@
-RSpec.shared_examples "a container" do |default_params|
+RSpec.shared_examples "a collection of definitions" do |default_params|
   it "creates a set of items based on the configuration" do
     container = described_class.new(**default_params.merge(items: [{type: "text", caption: "First name"}, {type: "text", caption: "Last name", required: true}]))
     expect(container.items.size).to eq 2
