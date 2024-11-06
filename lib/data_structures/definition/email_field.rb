@@ -4,7 +4,8 @@ module DataStructures
       attribute :default, :string, default: ""
 
       on_validation do |item, definition|
-        options = {attributes: :value, allow_nil: !definition.required?, with: /\A#{URI::MailTo::EMAIL_REGEXP}\z/o}
+        return if !definition.required? && item.value.blank?
+        options = {attributes: :value, with: /\A#{URI::MailTo::EMAIL_REGEXP}\z/o}
         ActiveModel::Validations::FormatValidator.new(options).validate(item)
       end
     end
