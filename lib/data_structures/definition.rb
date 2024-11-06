@@ -7,11 +7,11 @@ module DataStructures
       as_json["attributes"].merge("type" => DataStructures.type_for(self.class))
     end
 
-    def validate_item(item)= true
+    def validate_field(field)= true
 
-    def set_value_for(item, value)= nil
+    def set_value_for(field, value)= nil
 
-    def get_value_for(item)= nil
+    def get_value_for(field)= nil
 
     def build_field(**params) = self.class.field_class_name.constantize.new({definition: self}.merge(params))
 

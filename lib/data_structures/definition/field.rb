@@ -10,14 +10,14 @@ module DataStructures
 
       def required? = required
 
-      def validate_item(item)
-        validate_required_value_for item if required? && item.persisted?
-        self.class.validator&.call(item, self)
+      def validate_field(field)
+        field.errors.add(:value, :cant_be_blank) if required? && field.value.blank?
+        self.class.validator&.call(field, self) if required? || !field.value.blank?
       end
 
-      def set_value_for(item, value) = self.class.setter.nil? ? set_item_data_value(item, value) : self.class.setter.call(item, value, self)
+      def set_value_for(field, value) = self.class.setter.nil? ? set_data_value(field, value) : self.class.setter.call(field, value, self)
 
-      def get_value_for(item) = self.class.getter.nil? ? get_item_data_value(item) : self.class.getter.call(item, self)
+      def get_value_for(field) = self.class.getter.nil? ? get_data_value(field) : self.class.getter.call(field, self)
 
       class << self
         attr_reader :validator, :setter, :getter
@@ -37,20 +37,16 @@ module DataStructures
 
       private
 
-      def set_item_data_value item, value
-        item.data["value"] = value
+      def set_data_value field, value
+        field.data["value"] = value
       end
 
-      def get_item_data_value item
-        item.data["value"] || get_item_default_value(item)
+      def get_data_value field
+        field.data["value"] || get_default_value(field)
       end
 
-      def get_item_default_value item
-        item.definition.respond_to?(:default) ? item.definition.default : nil
-      end
-
-      def validate_required_value_for item
-        ActiveModel::Validations::PresenceValidator.new(attributes: :value).validate(item)
+      def get_default_value field
+        field.definition.respond_to?(:default) ? field.definition.default : nil
       end
     end
   end
