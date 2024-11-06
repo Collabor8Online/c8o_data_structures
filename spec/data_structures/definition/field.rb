@@ -60,7 +60,7 @@ RSpec.shared_examples "a field" do |default: nil, legal_values: [], illegal_valu
             subject.required = true
           end
 
-          it "is invalid" do
+          it "is not allowed to be blank" do
             field = subject.create_field(container: container)
 
             expect(field).to_not be_valid
@@ -73,8 +73,8 @@ RSpec.shared_examples "a field" do |default: nil, legal_values: [], illegal_valu
             subject.required = false
           end
 
-          it "is valid" do
-            field = subject.build_field(container: container)
+          it "is allowed to be blank" do
+            field = subject.create_field(container: container)
 
             expect(field).to be_valid
           end

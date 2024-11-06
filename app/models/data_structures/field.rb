@@ -30,8 +30,8 @@ module DataStructures
     def value=(value)
       definition.set_value_for(self, value)
     end
-    validate :value, on: :update do |item|
-      definition&.validate_item(item)
+    validate :value, on: :update do |field|
+      definition&.validate_field(field)
     end
 
     serialize :data, type: Hash, coder: JSON

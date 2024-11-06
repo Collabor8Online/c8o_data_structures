@@ -17,10 +17,10 @@ module DataStructures
         end
       end
 
-      describe "item" do
-        subject(:item) { described_class.new caption: "Email", default: "someone@example.com" }
+      describe "field" do
+        subject(:field) { described_class.new caption: "Email" }
 
-        it_behaves_like "a field", legal_values: ["alice@example.com", "bob@some-odd.place.with.tld"], illegal_values: ["Not_an_email", 123], default: "someone@example.com"
+        it_behaves_like "a field", legal_values: ["alice@example.com", "bob@some-odd.place.with.tld"], illegal_values: ["Not_an_email", 123]
       end
     end
   end
