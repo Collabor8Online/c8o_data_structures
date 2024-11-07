@@ -18,7 +18,7 @@ module DataStructures
   def self.reset = @configuration.reset
 
   require_relative "data_structures/definition"
-  require_relative "data_structures/definition/container"
+  require_relative "data_structures/definition/collection"
   require_relative "data_structures/definition/template"
   require_relative "data_structures/definition/field"
   Dir[File.join(__dir__, "data_structures/definition", "*.rb")].sort.each { |file| require file }

@@ -1,6 +1,6 @@
 module DataStructures
   class Definition
-    class Container < Definition
+    class Collection < Definition
       attr_reader :items
 
       def initialize(items: [], **)

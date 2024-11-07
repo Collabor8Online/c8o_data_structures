@@ -1,8 +1,8 @@
-require_relative "container"
+require_relative "collection"
 
 module DataStructures
   class Definition
-    class Group < Container
+    class Group < Collection
       self.field_class_name = "DataStructures::Group"
 
       def initialize(group_items: [], **)
