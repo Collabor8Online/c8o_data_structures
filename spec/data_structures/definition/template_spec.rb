@@ -4,14 +4,14 @@ require_relative "collection_of_definitions"
 module DataStructures
   class Definition
     RSpec.describe Template do
+      it_behaves_like "a collection of definitions", name: "My template", description: "A template for testing"
+
       describe ".new" do
         it "sets the name and description" do
           template = described_class.new name: "My template", description: "A template for testing"
           expect(template.name).to eq "My template"
           expect(template.description).to eq "A template for testing"
         end
-
-        it_behaves_like "a collection of definitions", name: "My template", description: "A template for testing"
       end
 
       describe "#name" do
