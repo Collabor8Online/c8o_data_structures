@@ -47,11 +47,12 @@ module DataStructures
       it "loads the template with the given type from the provided configuration" do
         DataStructures.register :load_spec_template, LoadSpecTemplate
 
-        template = definition.load(type: :load_spec_template, name: "My template", description: "Loaded from config")
+        template = definition.load({type: :load_spec_template, name: "My template", description: "Loaded from config"})
 
         expect(template.class).to eq LoadSpecTemplate
         expect(template.name).to eq "My template"
         expect(template.description).to eq "Loaded from config"
+        expect(template.parent_path).to be_blank
       end
 
       it "loads a template when using string keys" do
@@ -62,6 +63,7 @@ module DataStructures
         expect(template.class).to eq Definition::Template
         expect(template.name).to eq "My template"
         expect(template.description).to eq "Loaded from config"
+        expect(template.parent_path).to be_blank
       end
 
       it "loads a template from a JSON string" do
@@ -72,6 +74,16 @@ module DataStructures
         expect(template.class).to eq Definition::Template
         expect(template.name).to eq "My template"
         expect(template.description).to eq "Loaded from config"
+        expect(template.parent_path).to be_blank
+      end
+
+      it "sets the path of the created items" do
+        params = {"type" => "text", "caption" => "First name"}
+
+        field = definition.load(params, parent_path: "my_template")
+
+        expect(field.parent_path).to eq "my_template"
+        expect(field.path).to eq "my_template/first_name"
       end
 
       it "requires a type to be specified" do
@@ -83,11 +95,11 @@ module DataStructures
       subject(:definition) { described_class }
 
       it "saves the template recording its type, data and items" do
-        template = Definition.load type: "template", name: "My template", description: "Loaded from config", items: [
+        template = Definition.load({type: "template", name: "My template", description: "Loaded from config", items: [
           {type: "section", items: [
             {type: "text", caption: "My text", description: "Loaded from config", required: true}
           ]}
-        ]
+        ]})
 
         config = definition.dump(template)
 

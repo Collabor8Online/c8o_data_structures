@@ -28,7 +28,7 @@ module DataStructures
 
     describe "#create_fields_for" do
       it "creates fields, in order, for each definition in the given template" do
-        template = DataStructures::Definition.load type: "template", name: "Top level fields", items: [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]
+        template = DataStructures::Definition.load({type: "template", name: "Top level fields", items: [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]})
 
         container.create_fields_for template
 
@@ -48,7 +48,7 @@ module DataStructures
       end
 
       it "adds child fields, in order, for each definition in the given template" do
-        template = DataStructures::Definition.load type: "template", name: "Nested fields", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]
+        template = DataStructures::Definition.load({type: "template", name: "Nested fields", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]})
 
         container.create_fields_for template
 
@@ -62,7 +62,7 @@ module DataStructures
       end
 
       it "adds grand-child fields, in order, for each definition in the given template" do
-        template = DataStructures::Definition.load type: "template", name: "Nested fields", items: [{type: "section", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]}]
+        template = DataStructures::Definition.load({type: "template", name: "Nested fields", items: [{type: "section", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]}]})
 
         container.create_fields_for template
 

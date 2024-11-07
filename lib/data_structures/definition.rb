@@ -2,10 +2,19 @@ module DataStructures
   class Definition
     include ActiveModel::Model
     include ActiveModel::Attributes
+    attr_reader :parent_path
 
-    def to_h
-      as_json["attributes"].merge("type" => DataStructures.type_for(self.class))
+    def initialize(parent_path: "", position: 0, **)
+      super(**)
+      @position = position
+      @parent_path = parent_path.to_s
     end
+
+    def path = "#{@parent_path}/#{self}"
+
+    def to_s = @position.to_s
+
+    def to_h = as_json["attributes"].merge("type" => DataStructures.type_for(self.class))
 
     def validate_field(field)= true
 
@@ -26,11 +35,11 @@ module DataStructures
 
       def field_class_name = @field_class_name ||= "DataStructures::Field"
 
-      def load config
+      def load config, parent_path: ""
         config = convert_json(config) if config.is_a? String
         config = config.transform_keys(&:to_sym).except(:version)
         type = config.delete(:type) || raise(ArgumentError, "Type must be specified")
-        DataStructures.class_for(type).new(**config)
+        DataStructures.class_for(type).new(**config.merge(parent_path: parent_path))
       end
 
       def dump(definition) = definition.to_h
