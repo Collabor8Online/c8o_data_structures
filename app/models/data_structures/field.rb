@@ -17,6 +17,7 @@ module DataStructures
     def definition=(definition)
       @definition = definition
       self.definition_configuration = Definition.dump(definition)
+      self.field_name = definition.path
     end
 
     attribute :value
@@ -27,8 +28,6 @@ module DataStructures
     end
 
     def fields = children.order(:position)
-
-    def field_name = definition.path
 
     def caption = definition.respond_to?(:caption) ? definition.caption : ""
 

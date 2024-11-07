@@ -37,12 +37,18 @@ module DataStructures
       end
 
       it "is written to the definition configuration" do
-        item.definition = DataStructures::Definition::TextField.new(caption: "What is your favourite ice-cream?", required: true, default: "Chocolate")
+        item.definition = DataStructures::Definition::TextField.new(caption: "What is your favourite ice cream?", required: true, default: "Chocolate")
 
         expect(item.definition_configuration["type"]).to eq "text"
-        expect(item.definition_configuration["caption"]).to eq "What is your favourite ice-cream?"
+        expect(item.definition_configuration["caption"]).to eq "What is your favourite ice cream?"
         expect(item.definition_configuration["required"]).to eq true
         expect(item.definition_configuration["default"]).to eq "Chocolate"
+      end
+
+      it "updates the field_name to match the definition" do
+        item.definition = DataStructures::Definition::TextField.new(caption: "What is your favourite ice cream?", required: true, default: "Chocolate")
+
+        expect(item.field_name).to eq "/what_is_your_favourite_ice_cream"
       end
     end
 
@@ -61,6 +67,19 @@ module DataStructures
         text_field = field.fields.third.definition
         expect(text_field).to be_kind_of(DataStructures::Definition::TextField)
         expect(text_field.caption).to eq "What is your name?"
+      end
+
+      it "updates the field names for the nested fields" do
+        expect(field.field_name).to eq "/0"
+
+        heading = field.fields.first
+        expect(heading.field_name).to eq "/0/0"
+
+        sub_heading = field.fields.second
+        expect(sub_heading.field_name).to eq "/0/1"
+
+        text_field = field.fields.third
+        expect(text_field.field_name).to eq "/0/what_is_your_name"
       end
     end
 
