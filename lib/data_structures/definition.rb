@@ -35,11 +35,11 @@ module DataStructures
 
       def field_class_name = @field_class_name ||= "DataStructures::Field"
 
-      def load config, parent_path: ""
+      def load config, parent_path: "", position: 0
         config = convert_json(config) if config.is_a? String
         config = config.transform_keys(&:to_sym).except(:version)
         type = config.delete(:type) || raise(ArgumentError, "Type must be specified")
-        DataStructures.class_for(type).new(**config.merge(parent_path: parent_path))
+        DataStructures.class_for(type).new(**config.merge(parent_path: parent_path, position: position))
       end
 
       def dump(definition) = definition.to_h
