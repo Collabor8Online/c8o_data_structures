@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_10_31_164132) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_07_135103) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -61,6 +61,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_10_31_164132) do
     t.integer "model_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "field_name", default: "", null: false
     t.index ["container_type", "container_id", "ancestry"], name: "idx_on_container_type_container_id_ancestry_37cc2ccbb5"
     t.index ["container_type", "container_id"], name: "index_data_structures_items_on_container"
     t.index ["model_type", "model_id"], name: "index_data_structures_items_on_model"

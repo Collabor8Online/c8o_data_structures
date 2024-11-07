@@ -5,6 +5,7 @@ module DataStructures
     let(:alice) { Person.create(first_name: "Alice", last_name: "Aardvark") }
     let(:container) { Form.create(person: alice, name: "My form") }
     let(:definition_configuration) { {"type" => "text", "caption" => "What's your name?", "required" => true, "default" => "Alice"} }
+    let(:what_is_your_name) { DataStructures::Definition.load definition_configuration }
 
     describe "#container" do
       subject(:item) { described_class.new container: nil, definition_configuration: definition_configuration }
@@ -164,7 +165,7 @@ module DataStructures
     end
 
     describe "#field_name" do
-      subject(:field) { described_class.create! container: container, definition_configuration: definition_configuration }
+      subject(:field) { described_class.create! container: container, definition: what_is_your_name }
 
       it "returns the field_name from the definition" do
         expect(field.field_name).to eq "/what_s_your_name"
