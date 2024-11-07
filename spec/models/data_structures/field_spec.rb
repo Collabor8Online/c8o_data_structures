@@ -108,6 +108,42 @@ module DataStructures
       end
     end
 
+    describe "#caption" do
+      context "when the definition is a field" do
+        subject(:field) { described_class.create! container: container, definition_configuration: definition_configuration }
+
+        it "returns the caption from the definition" do
+          expect(field.caption).to eq "What's your name?"
+        end
+      end
+
+      context "when the definition is a collection" do
+        subject(:field) { described_class.create! container: container, definition_configuration: {type: "section"} }
+
+        it "returns a blank caption" do
+          expect(field.caption).to be_blank
+        end
+      end
+    end
+
+    describe "#required?" do
+      context "when the definition is a field" do
+        subject(:field) { described_class.create! container: container, definition_configuration: definition_configuration }
+
+        it "returns the required value from the definition" do
+          expect(field).to be_required
+        end
+      end
+
+      context "when the definition is a collection" do
+        subject(:field) { described_class.create! container: container, definition_configuration: {type: "section"} }
+
+        it "returns false" do
+          expect(field).to_not be_required
+        end
+      end
+    end
+
     describe "#field_name" do
       subject(:field) { described_class.create! container: container, definition_configuration: definition_configuration }
 

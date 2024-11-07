@@ -30,6 +30,10 @@ module DataStructures
 
     def field_name = definition.path
 
+    def caption = definition.respond_to?(:caption) ? definition.caption : ""
+
+    def required? = definition.respond_to?(:required?) ? definition.required? : false
+
     def next_position = fields.size
 
     def fields_attributes=(params)
