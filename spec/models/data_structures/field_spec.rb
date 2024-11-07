@@ -100,6 +100,20 @@ module DataStructures
       it "returns the child fields in order" do
         expect(field.fields).to eq [first, second]
       end
+
+      it "does not return nested fields" do
+        nested = described_class.create! container: container, parent: first, position: 0, definition_configuration: definition_configuration
+
+        expect(field.fields).to_not include nested
+      end
+    end
+
+    describe "#field_name" do
+      subject(:field) { described_class.create! container: container, definition_configuration: definition_configuration }
+
+      it "returns the field_name from the definition" do
+        expect(field.field_name).to eq "/what_s_your_name"
+      end
     end
 
     describe "#data" do
