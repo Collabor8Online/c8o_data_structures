@@ -1,0 +1,5 @@
+en:
+  activerecord:
+    errors:
+      messages:
+        is_not_a_container: is not a container

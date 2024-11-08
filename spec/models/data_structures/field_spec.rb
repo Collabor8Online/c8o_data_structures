@@ -5,6 +5,7 @@ module DataStructures
     let(:alice) { Person.create(first_name: "Alice", last_name: "Aardvark") }
     let(:container) { Form.create(person: alice, name: "My form") }
     let(:definition_configuration) { {"type" => "text", "caption" => "What's your name?", "required" => true, "default" => "Alice"} }
+    let(:what_is_your_name) { DataStructures::Definition.load definition_configuration }
 
     describe "#container" do
       subject(:item) { described_class.new container: nil, definition_configuration: definition_configuration }
@@ -37,18 +38,24 @@ module DataStructures
       end
 
       it "is written to the definition configuration" do
-        item.definition = DataStructures::Definition::TextField.new(caption: "What is your favourite ice-cream?", required: true, default: "Chocolate")
+        item.definition = DataStructures::Definition::TextField.new(caption: "What is your favourite ice cream?", required: true, default: "Chocolate")
 
         expect(item.definition_configuration["type"]).to eq "text"
-        expect(item.definition_configuration["caption"]).to eq "What is your favourite ice-cream?"
+        expect(item.definition_configuration["caption"]).to eq "What is your favourite ice cream?"
         expect(item.definition_configuration["required"]).to eq true
         expect(item.definition_configuration["default"]).to eq "Chocolate"
+      end
+
+      it "updates the field_name to match the definition" do
+        item.definition = DataStructures::Definition::TextField.new(caption: "What is your favourite ice cream?", required: true, default: "Chocolate")
+
+        expect(item.field_name).to eq "/what_is_your_favourite_ice_cream"
       end
     end
 
     describe "#definition - nested Definition" do
       subject(:field) { described_class.create! container: container, definition: definition }
-      let(:definition) { DataStructures::Definition.load("type" => "section", "items" => [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]) }
+      let(:definition) { DataStructures::Definition.load({"type" => "section", "items" => [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]}) }
 
       it "creates child fields for nested Definition" do
         expect(field.fields.size).to eq 3
@@ -61,6 +68,19 @@ module DataStructures
         text_field = field.fields.third.definition
         expect(text_field).to be_kind_of(DataStructures::Definition::TextField)
         expect(text_field.caption).to eq "What is your name?"
+      end
+
+      it "updates the field names for the nested fields" do
+        expect(field.field_name).to eq "/0"
+
+        heading = field.fields.first
+        expect(heading.field_name).to eq "/0/0"
+
+        sub_heading = field.fields.second
+        expect(sub_heading.field_name).to eq "/0/1"
+
+        text_field = field.fields.third
+        expect(text_field.field_name).to eq "/0/what_is_your_name"
       end
     end
 
@@ -99,6 +119,56 @@ module DataStructures
 
       it "returns the child fields in order" do
         expect(field.fields).to eq [first, second]
+      end
+
+      it "does not return nested fields" do
+        nested = described_class.create! container: container, parent: first, position: 0, definition_configuration: definition_configuration
+
+        expect(field.fields).to_not include nested
+      end
+    end
+
+    describe "#caption" do
+      context "when the definition is a field" do
+        subject(:field) { described_class.create! container: container, definition_configuration: definition_configuration }
+
+        it "returns the caption from the definition" do
+          expect(field.caption).to eq "What's your name?"
+        end
+      end
+
+      context "when the definition is a collection" do
+        subject(:field) { described_class.create! container: container, definition_configuration: {type: "section"} }
+
+        it "returns a blank caption" do
+          expect(field.caption).to be_blank
+        end
+      end
+    end
+
+    describe "#required?" do
+      context "when the definition is a field" do
+        subject(:field) { described_class.create! container: container, definition_configuration: definition_configuration }
+
+        it "returns the required value from the definition" do
+          expect(field).to be_required
+        end
+      end
+
+      context "when the definition is a collection" do
+        subject(:field) { described_class.create! container: container, definition_configuration: {type: "section"} }
+
+        it "returns false" do
+          expect(field).to_not be_required
+        end
+      end
+    end
+
+    describe "#field_name" do
+      subject(:field) { described_class.create! container: container, definition: what_is_your_name }
+
+      it "returns the field_name from the definition" do
+        expect(field.field_name).to eq "/what_s_your_name"
       end
     end
 

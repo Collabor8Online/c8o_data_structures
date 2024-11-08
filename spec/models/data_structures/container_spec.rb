@@ -28,7 +28,7 @@ module DataStructures
 
     describe "#create_fields_for" do
       it "creates fields, in order, for each definition in the given template" do
-        template = DataStructures::Definition.load type: "template", name: "Top level fields", items: [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]
+        template = DataStructures::Definition.load({type: "template", name: "Top level fields", items: [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]})
 
         container.create_fields_for template
 
@@ -48,7 +48,7 @@ module DataStructures
       end
 
       it "adds child fields, in order, for each definition in the given template" do
-        template = DataStructures::Definition.load type: "template", name: "Nested fields", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]
+        template = DataStructures::Definition.load({type: "template", name: "Nested fields", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]})
 
         container.create_fields_for template
 
@@ -62,7 +62,7 @@ module DataStructures
       end
 
       it "adds grand-child fields, in order, for each definition in the given template" do
-        template = DataStructures::Definition.load type: "template", name: "Nested fields", items: [{type: "section", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]}]
+        template = DataStructures::Definition.load({type: "template", name: "Nested fields", items: [{type: "section", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}]}]}]})
 
         container.create_fields_for template
 
@@ -76,6 +76,25 @@ module DataStructures
         sub_heading = sub_section.fields.first
         expect(sub_heading.definition).to be_kind_of(DataStructures::Definition::SubHeading)
         expect(sub_heading.definition.text).to eq "Hello world"
+      end
+    end
+
+    describe "#find_field" do
+      it "finds fields by field_name" do
+        template = DataStructures::Definition.load({type: "template", name: "Nested fields", items: [{type: "section", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}, {type: "text", caption: "First name"}, {type: "text", caption: "Last name"}]}]}]})
+
+        container.create_fields_for template
+
+        sub_heading = container.find_field "/0/0/0/0"
+        expect(sub_heading.definition).to be_kind_of DataStructures::Definition::SubHeading
+
+        first_name = container.find_field "/0/0/0/first_name"
+        expect(first_name.definition).to be_kind_of DataStructures::Definition::TextField
+        expect(first_name.caption).to eq "First name"
+
+        last_name = container.find_field "/0/0/0/last_name"
+        expect(last_name.definition).to be_kind_of DataStructures::Definition::TextField
+        expect(last_name.caption).to eq "Last name"
       end
     end
   end

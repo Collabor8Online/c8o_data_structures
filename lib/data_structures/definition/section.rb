@@ -1,8 +1,8 @@
-require_relative "container"
+require_relative "collection"
 
 module DataStructures
   class Definition
-    class Section < Container
+    class Section < Collection
     end
   end
 end

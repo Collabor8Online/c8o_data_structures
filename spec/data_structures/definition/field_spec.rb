@@ -4,7 +4,20 @@ require_relative "field_definition"
 module DataStructures
   class Definition
     RSpec.describe Field do
-      let(:fake_field) { double("field", data: {"value" => "whatever"}, value: "whatever", definition: described_class.new) }
+      subject(:field) { described_class.new caption: "My field", required: false, parent_path: "my_template/1" }
+      let(:fake_field) { double("field", caption: "My field", data: {"value" => "whatever"}, value: "whatever", definition: described_class.new) }
+
+      describe "#path" do
+        it "uses the parent_path and the caption to generate the path" do
+          expect(field.path).to eq "my_template/1/my_field"
+        end
+      end
+
+      describe "#to_s" do
+        it "uses the caption as the string representation" do
+          expect(field.to_s).to eq "My field"
+        end
+      end
 
       describe ".on_validation" do
         subject(:definition) { described_class }

@@ -14,5 +14,9 @@ module DataStructures
         fields.find_by(position: position) || item_definition.create_field(position: position, container: self, definition: item_definition)
       end
     end
+
+    def find_field path
+      _fields.find_by field_name: path
+    end
   end
 end

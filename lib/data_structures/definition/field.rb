@@ -8,6 +8,8 @@ module DataStructures
 
       def to_s = caption
 
+      def path = "#{parent_path}/#{caption.to_s.parameterize(separator: "_")}"
+
       def required? = required
 
       def validate_field(field)
