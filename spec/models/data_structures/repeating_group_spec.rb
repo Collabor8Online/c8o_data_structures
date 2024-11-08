@@ -10,9 +10,9 @@ module DataStructures
       subject(:repeating_group) { described_class.new container: container, definition_configuration: definition_configuration }
 
       it "creates a field for the repeating group, one for the first group within it and one for each of the fields within the group items" do
-        field = repeating_group.definition.create_field(container: container)
-        expect(field.fields.size).to eq 1
-        group = field.fields.first
+        repeating_group_field = repeating_group.definition.create_field(container: container)
+        expect(repeating_group_field.fields.size).to eq 1
+        group = repeating_group_field.groups.first
         expect(group.fields.size).to eq 2
       end
     end
@@ -23,8 +23,10 @@ module DataStructures
       it "adds a group to the repeating group" do
         repeating_group.add_group
         expect(repeating_group.reload.groups.size).to eq 2
+
         first_group = repeating_group.groups.first
         expect(first_group.fields.size).to eq 2
+
         second_group = repeating_group.groups.second
         expect(second_group.fields.size).to eq 2
       end
