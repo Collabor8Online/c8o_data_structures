@@ -5,7 +5,7 @@ class CreateDataStructuresFields < ActiveRecord::Migration[8.0]
       t.string :ancestry
       t.string :type
       t.text :definition_configuration
-      t.integer :position, null: false, default: 0
+      t.integer :position, null: false, default: 1
       t.text :data
       t.belongs_to :model, polymorphic: true
       t.timestamps

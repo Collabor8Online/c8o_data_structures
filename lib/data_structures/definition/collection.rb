@@ -17,7 +17,7 @@ module DataStructures
       private
 
       def load_items_from(items)
-        items.each_with_index.map { |item_data, position| DataStructures::Definition.load item_data, position: position, parent_path: path }.freeze
+        items.each_with_index.map { |item_data, position| DataStructures::Definition.load item_data, position: position + 1, parent_path: path }.freeze
       end
     end
   end

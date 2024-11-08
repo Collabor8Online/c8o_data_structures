@@ -16,8 +16,7 @@ module DataStructures
 
     def definition=(definition)
       @definition = definition
-      self.definition_configuration = Definition.dump(definition)
-      self.field_name = definition.path
+      self.definition_configuration = Definition.dump(@definition)
     end
 
     attribute :value
@@ -41,7 +40,7 @@ module DataStructures
 
     private
 
-    validate :value, on: :update do |field|
+    validate :value, on: :update, unless: :definition_configuration_changed? do |field|
       definition&.validate_field(field)
     end
 
@@ -49,13 +48,23 @@ module DataStructures
       item.errors.add :container, :is_not_a_container unless item.container.is_a? DataStructures::Container
     end
 
-    after_save :create_fields_for_definition, if: :saved_change_to_definition_configuration?
+    before_save if: :definition_configuration_changed? do |field|
+      @definition = nil # force reload of the definition from the configuration hash
+      field.field_name = [parent&.field_name, definition.path_name].compact.join("/")
+    end
 
-    def create_fields_for_definition
+    after_save :create_or_update_child_fields, if: :saved_change_to_definition_configuration?
+
+    def create_or_update_child_fields
       return unless definition.respond_to? :items
-      definition.items.each_with_index do |item_definition, position|
-        fields.find_by(position: position) || item_definition.create_field(position: position, container: container, parent: self, definition: item_definition)
+      definition.items.each_with_index do |field_definition, position|
+        existing_field = container.find_field("#{field_name}/#{field_definition.path_name}")
+        existing_field.present? ? update_existing_field(existing_field, field_definition, position + 1) : create_field_from(field_definition, position + 1)
       end
     end
+
+    def update_existing_field(field, field_definition, position) = field.update parent: self, position: position, definition: field_definition
+
+    def create_field_from(field_definition, position) = field_definition.create_field(position: position, container: container, parent: self)
   end
 end

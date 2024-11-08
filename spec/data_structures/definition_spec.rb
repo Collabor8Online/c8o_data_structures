@@ -7,25 +7,15 @@ module DataStructures
   # standard:enable Lint/ConstantDefinitionInBlock
 
   RSpec.describe Definition do
+    let(:container) { Form.new }
+
     describe "#build_field" do
       subject(:definition) { described_class.new }
-      let(:container) { Form.new }
 
       it "builds a field of the given type" do
         field = definition.build_field(container: container)
         expect(field).to be_kind_of(DataStructures::Field)
         expect(field).to_not be_persisted
-      end
-    end
-
-    describe "#create_field" do
-      subject(:definition) { described_class.new }
-      let(:container) { Form.new }
-
-      it "creates a field of the given type" do
-        field = definition.create_field(container: container)
-        expect(field).to be_kind_of(DataStructures::Field)
-        expect(field).to be_persisted
       end
     end
 
@@ -47,7 +37,7 @@ module DataStructures
       it "loads the template with the given type from the provided configuration" do
         DataStructures.register :load_spec_template, LoadSpecTemplate
 
-        template = definition.load({type: :load_spec_template, name: "My template", description: "Loaded from config"})
+        template = definition.load({type: "load_spec_template", name: "My template", description: "Loaded from config"})
 
         expect(template.class).to eq LoadSpecTemplate
         expect(template.name).to eq "My template"

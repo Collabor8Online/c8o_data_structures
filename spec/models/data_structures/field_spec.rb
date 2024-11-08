@@ -4,11 +4,10 @@ module DataStructures
   RSpec.describe Field, type: :model do
     let(:alice) { Person.create(first_name: "Alice", last_name: "Aardvark") }
     let(:container) { Form.create(person: alice, name: "My form") }
-    let(:definition_configuration) { {"type" => "text", "caption" => "What's your name?", "required" => true, "default" => "Alice"} }
-    let(:what_is_your_name) { DataStructures::Definition.load definition_configuration }
+    let(:what_is_your_name) { DataStructures::Definition.load({type: "text", caption: "What's your name?", required: true, default: "Alice"}) }
 
     describe "#container" do
-      subject(:item) { described_class.new container: nil, definition_configuration: definition_configuration }
+      subject(:item) { described_class.new container: nil, definition: what_is_your_name }
 
       it "must be present" do
         item.container = nil
@@ -27,13 +26,13 @@ module DataStructures
     end
 
     describe "#definition" do
-      subject(:item) { described_class.new definition_configuration: definition_configuration }
+      subject(:item) { described_class.create! container: container, definition_configuration: {type: "text", caption: "What is your name?", required: true} }
 
       it "is loaded from the definition configuration" do
         definition = item.definition
 
         expect(definition).to be_kind_of(DataStructures::Definition::TextField)
-        expect(definition.caption).to eq "What's your name?"
+        expect(definition.caption).to eq "What is your name?"
         expect(definition).to be_required
       end
 
@@ -46,91 +45,105 @@ module DataStructures
         expect(item.definition_configuration["default"]).to eq "Chocolate"
       end
 
-      it "updates the field_name to match the definition" do
-        item.definition = DataStructures::Definition::TextField.new(caption: "What is your favourite ice cream?", required: true, default: "Chocolate")
+      it "takes its field_name from the definition" do
+        expect(item.field_name).to eq "what_is_your_name"
+      end
 
-        expect(item.field_name).to eq "/what_is_your_favourite_ice_cream"
+      it "updates the field_name when the definition is updated" do
+        item.update! definition: DataStructures::Definition::TextField.new(caption: "What is your favourite ice cream?", required: true, default: "Chocolate")
+
+        expect(item.field_name).to eq "what_is_your_favourite_ice_cream"
+      end
+
+      it "updates the field_name when the definition configuration is updated" do
+        item.update! definition_configuration: {type: "text", caption: "What is your favourite ice cream?", required: true, default: "Chocolate"}
+
+        expect(item.field_name).to eq "what_is_your_favourite_ice_cream"
       end
     end
 
     describe "#definition - nested Definition" do
-      subject(:field) { described_class.create! container: container, definition: definition }
-      let(:definition) { DataStructures::Definition.load({"type" => "section", "items" => [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]}) }
+      subject(:section) { described_class.create! container: container, definition: definition }
+      let(:definition) { DataStructures::Definition.load({type: "section", items: [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]}) }
 
-      it "creates child fields for nested Definition" do
-        expect(field.fields.size).to eq 3
-        heading = field.fields.first.definition
+      it "creates child fields for a nested definition" do
+        expect(section.fields.size).to eq 3
+
+        heading = section.fields.first.definition
         expect(heading).to be_kind_of(DataStructures::Definition::Heading)
         expect(heading.text).to eq "Hello"
-        sub_heading = field.fields.second.definition
+
+        sub_heading = section.fields.second.definition
         expect(sub_heading).to be_kind_of(DataStructures::Definition::SubHeading)
         expect(sub_heading.text).to eq "World"
-        text_field = field.fields.third.definition
+
+        text_field = section.fields.third.definition
         expect(text_field).to be_kind_of(DataStructures::Definition::TextField)
         expect(text_field.caption).to eq "What is your name?"
       end
 
-      it "updates the field names for the nested fields" do
-        expect(field.field_name).to eq "/0"
+      it "sets the field names for the nested fields" do
+        expect(section.field_name).to eq "1"
 
-        heading = field.fields.first
-        expect(heading.field_name).to eq "/0/0"
+        heading = section.fields.first
+        expect(heading.field_name).to eq "1/1"
 
-        sub_heading = field.fields.second
-        expect(sub_heading.field_name).to eq "/0/1"
+        sub_heading = section.fields.second
+        expect(sub_heading.field_name).to eq "1/2"
 
-        text_field = field.fields.third
-        expect(text_field.field_name).to eq "/0/what_is_your_name"
+        text_field = section.fields.third
+        expect(text_field.field_name).to eq "1/what_is_your_name"
       end
     end
 
     describe "#parent" do
-      subject(:item) { described_class.create! container: container, definition_configuration: definition_configuration }
+      subject(:item) { described_class.create! container: container, definition_configuration: {type: "section"} }
 
       it "is nil for top-level items" do
         expect(item.parent).to be_nil
       end
 
       it "is the parent item for nested items" do
-        child = described_class.create! container: container, parent: item, definition_configuration: definition_configuration
+        child = described_class.create! container: container, parent: item, definition: what_is_your_name
 
         expect(child.parent).to eq item
       end
     end
 
     describe "#children" do
-      subject(:item) { described_class.create! container: container, definition_configuration: definition_configuration }
+      subject(:item) { described_class.create! container: container, definition_configuration: {type: "section"} }
 
       it "is empty for items without children" do
         expect(item.children).to be_empty
       end
 
       it "contains the child items" do
-        child = described_class.create! container: container, parent: item, definition_configuration: definition_configuration
+        child = described_class.create! container: container, parent: item, definition: what_is_your_name
 
         expect(item.children).to include child
       end
     end
 
     describe "#fields" do
-      subject(:field) { described_class.create! container: container, definition_configuration: definition_configuration }
-      let!(:first) { described_class.create! container: container, parent: field, position: 0, definition_configuration: definition_configuration }
-      let!(:second) { described_class.create! container: container, parent: field, position: 1, definition_configuration: definition_configuration }
+      subject(:section) { described_class.create! container: container, definition_configuration: {type: "section"} }
+      let!(:first) { described_class.create! container: container, parent: section, position: 0, definition_configuration: {type: "text", caption: "First question"} }
+      let!(:second) { described_class.create! container: container, parent: section, position: 1, definition_configuration: {type: "text", caption: "Second question"} }
+      let!(:second_section) { described_class.create! container: container, parent: section, position: 2, definition_configuration: {type: "section"} }
 
       it "returns the child fields in order" do
-        expect(field.fields).to eq [first, second]
+        expect(section.fields).to eq [first, second, second_section]
       end
 
       it "does not return nested fields" do
-        nested = described_class.create! container: container, parent: first, position: 0, definition_configuration: definition_configuration
+        nested = described_class.create! container: container, parent: second_section, position: 0, definition_configuration: {type: "text", caption: "Nested underneath the section section"}
 
-        expect(field.fields).to_not include nested
+        expect(section.fields).to_not include nested
       end
     end
 
     describe "#caption" do
       context "when the definition is a field" do
-        subject(:field) { described_class.create! container: container, definition_configuration: definition_configuration }
+        subject(:field) { described_class.create! container: container, definition: what_is_your_name }
 
         it "returns the caption from the definition" do
           expect(field.caption).to eq "What's your name?"
@@ -148,7 +161,7 @@ module DataStructures
 
     describe "#required?" do
       context "when the definition is a field" do
-        subject(:field) { described_class.create! container: container, definition_configuration: definition_configuration }
+        subject(:field) { described_class.create! container: container, definition: what_is_your_name }
 
         it "returns the required value from the definition" do
           expect(field).to be_required
@@ -168,7 +181,7 @@ module DataStructures
       subject(:field) { described_class.create! container: container, definition: what_is_your_name }
 
       it "returns the field_name from the definition" do
-        expect(field.field_name).to eq "/what_s_your_name"
+        expect(field.field_name).to eq "what_s_your_name"
       end
     end
 

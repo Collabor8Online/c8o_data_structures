@@ -4,7 +4,10 @@ require_relative "field_definition"
 module DataStructures
   class Definition
     RSpec.describe DropDownField do
-      it_behaves_like "a field definition"
+      describe "field" do
+        subject { described_class.new caption: "Choose an option", options: {"one" => "Option one", "two" => "Option two"} }
+        it_behaves_like "a field definition"
+      end
 
       describe ".new" do
         it "sets the options" do

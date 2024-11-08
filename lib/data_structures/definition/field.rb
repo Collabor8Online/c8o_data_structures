@@ -8,12 +8,12 @@ module DataStructures
 
       def to_s = caption
 
-      def path = "#{parent_path}/#{caption.to_s.parameterize(separator: "_")}"
+      def path_name = caption.to_s.parameterize(separator: "_")
 
       def required? = required
 
       def validate_field(field)
-        field.errors.add(:value, :cant_be_blank) if required? && field.value.blank?
+        ActiveModel::Validations::PresenceValidator.new(attributes: :value).validate(field) if required? && field.value.blank?
         self.class.validator&.call(field, self) if required? || !field.value.blank?
       end
 

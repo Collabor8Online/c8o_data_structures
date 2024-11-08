@@ -111,29 +111,29 @@ module DataStructures
             expect(configuration.class_for(:phone_number).value).to eq DataStructures::Definition::PhoneNumberField
           end
 
-          it "pre-registers geo_location fields" do
-            # expect(configuration.class_for(:geo_location).value).to eq DataStructures::Definition::GeoLocationField
-          end
+          # it "pre-registers geo_location fields" do
+          #   expect(configuration.class_for(:geo_location).value).to eq DataStructures::Definition::GeoLocationField
+          # end
 
-          it "pre-registers media_attachment fields" do
-            # expect(configuration.class_for(:media_attachment).value).to eq DataStructures::Definition::MediaAttachmentField
-          end
+          # it "pre-registers media_attachment fields" do
+          #   expect(configuration.class_for(:media_attachment).value).to eq DataStructures::Definition::MediaAttachmentField
+          # end
 
-          it "pre-registers file_attachment fields" do
-            # expect(configuration.class_for(:file_attachment).value).to eq DataStructures::Definition::FileAttachmentField
-          end
+          # it "pre-registers file_attachment fields" do
+          #   expect(configuration.class_for(:file_attachment).value).to eq DataStructures::Definition::FileAttachmentField
+          # end
 
           it "pre-registers drop_down fields" do
-            # expect(configuration.class_for(:drop_down).value).to eq DataStructures::Definition::DropDownField
+            expect(configuration.class_for(:drop_down).value).to eq DataStructures::Definition::DropDownField
           end
 
-          it "pre-registers multi_select fields" do
-            # expect(configuration.class_for(:multi_select).value).to eq DataStructures::Definition::MultiSelectField
-          end
+          # it "pre-registers multi_select fields" do
+          #   expect(configuration.class_for(:multi_select).value).to eq DataStructures::Definition::MultiSelectField
+          # end
 
-          it "pre-registers ratings fields" do
-            # expect(configuration.class_for(:ratings).value).to eq DataStructures::Definition::RatingsField
-          end
+          # it "pre-registers ratings fields" do
+          #   expect(configuration.class_for(:ratings).value).to eq DataStructures::Definition::RatingsField
+          # end
 
           it "pre-registers signature fields" do
             expect(configuration.class_for(:signature).value).to eq DataStructures::Definition::SignatureField

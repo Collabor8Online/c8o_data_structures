@@ -42,6 +42,7 @@ module DataStructures
       url: "DataStructures::Definition::UrlField",
       email: "DataStructures::Definition::EmailField",
       phone_number: "DataStructures::Definition::PhoneNumberField",
+      drop_down: "DataStructures::Definition::DropDownField",
       signature: "DataStructures::Definition::SignatureField"
     }.freeze
     private_constant :DEFAULT_TYPES

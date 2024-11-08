@@ -55,7 +55,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_07_135103) do
     t.string "ancestry"
     t.string "type"
     t.text "definition_configuration"
-    t.integer "position", default: 0, null: false
+    t.integer "position", default: 1, null: false
     t.text "data"
     t.string "model_type"
     t.integer "model_id"
