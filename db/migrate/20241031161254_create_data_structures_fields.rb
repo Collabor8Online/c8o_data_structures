@@ -4,6 +4,7 @@ class CreateDataStructuresFields < ActiveRecord::Migration[8.0]
       t.belongs_to :container, polymorphic: true
       t.string :ancestry
       t.string :type
+      t.string :field_name, null: false, default: ""
       t.text :definition_configuration
       t.integer :position, null: false, default: 1
       t.text :data
