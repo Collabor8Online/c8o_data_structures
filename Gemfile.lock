@@ -83,7 +83,7 @@ GEM
     ancestry (4.3.3)
       activerecord (>= 5.2.6)
     ast (2.4.2)
-    async (2.19.0)
+    async (2.20.0)
       console (~> 1.29)
       fiber-annotation
       io-event (~> 1.6, >= 1.6.5)
