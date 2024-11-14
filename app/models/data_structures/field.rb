@@ -32,7 +32,7 @@ module DataStructures
 
     def required? = definition.respond_to?(:required?) ? definition.required? : false
 
-    def next_position = fields.size
+    def next_position = fields.size + 1
 
     def fields_attributes=(params)
       params.values.collect { |param| fields.find(param.delete(:id)).update param }
@@ -52,7 +52,7 @@ module DataStructures
 
     before_save if: :definition_configuration_changed? do |field|
       @definition = nil # force reload of the definition from the configuration hash
-      field.field_name = [parent&.field_name, definition.reference].compact.join("/")
+      field.field_name = generate_field_name
     end
 
     after_save :create_or_update_child_fields, if: :saved_change_to_definition_configuration?
@@ -68,5 +68,9 @@ module DataStructures
     def update_existing_field(field, field_definition, position) = field.update parent: self, position: position, definition: field_definition
 
     def create_field_from(field_definition, position) = field_definition.create_field(position: position, container: container, parent: self)
+
+    protected
+
+    def generate_field_name = [parent&.field_name, definition.reference].compact.join("/")
   end
 end
