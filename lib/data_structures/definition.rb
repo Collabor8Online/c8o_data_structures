@@ -2,8 +2,14 @@ module DataStructures
   class Definition
     include ActiveModel::Model
     include ActiveModel::Attributes
+    attribute :reference, :string
     attribute :parent_path, :string, default: ""
     attribute :position, :integer, default: 0
+
+    def initialize(**)
+      super
+      self.reference ||= path
+    end
 
     def to_s = "#{model_name.element}:#{position}"
 

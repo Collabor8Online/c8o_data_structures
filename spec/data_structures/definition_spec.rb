@@ -9,6 +9,66 @@ module DataStructures
   RSpec.describe Definition do
     let(:container) { Form.new }
 
+    describe "#path" do
+      it "is calculated from the parent path and the definition's path_name" do
+        described_class.new(parent_path: "my_template", position: 1).tap do |definition|
+          expect(definition.path).to eq "my_template/1"
+        end
+      end
+    end
+
+    describe "#reference" do
+      it "is supplied when the definition is created" do
+        described_class.new(reference: "my_reference").tap do |definition|
+          expect(definition.reference).to eq "my_reference"
+        end
+      end
+
+      it "defaults to the path" do
+        described_class.new(parent_path: "my_template", position: 1).tap do |definition|
+          expect(definition.reference).to eq "my_template/1"
+        end
+      end
+    end
+
+    describe "#to_s" do
+      it "is taken from the definition's model name and position" do
+        described_class.new(position: 1).tap do |definition|
+          expect(definition.to_s).to eq "definition:1"
+        end
+      end
+    end
+
+    describe "#to_h" do
+      it "is taken from the definition's attributes and type" do
+        allow(DataStructures).to receive(:type_for).with(Definition).and_return("definition")
+        described_class.new(parent_path: "my_template", position: 1).tap do |definition|
+          expect(definition.to_h).to eq({
+            "parent_path" => "my_template",
+            "position" => 1,
+            "reference" => "my_template/1",
+            "type" => "definition"
+          })
+        end
+      end
+    end
+
+    describe "#parent_path" do
+      it "supplied by the parent" do
+        described_class.new(parent_path: "my_template").tap do |definition|
+          expect(definition.parent_path).to eq "my_template"
+        end
+      end
+    end
+
+    describe "#path_name" do
+      it "defaults to the position" do
+        described_class.new(position: 1).tap do |definition|
+          expect(definition.path_name).to eq "1"
+        end
+      end
+    end
+
     describe "#build_field" do
       subject(:definition) { described_class.new }
 
