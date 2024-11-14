@@ -8,13 +8,13 @@ RSpec.shared_examples "a collection of definitions" do |default_params|
       expect(first_name).to be_kind_of(DataStructures::Definition::TextField)
       expect(first_name.caption).to eq "First name"
       expect(first_name).to_not be_required
-      expect(first_name.path).to eq "/0/first_name"
+      expect(first_name.path).to eq "0/first_name"
 
       last_name = container.items[1]
       expect(last_name).to be_kind_of(DataStructures::Definition::TextField)
       expect(last_name.caption).to eq "Last name"
       expect(last_name).to be_required
-      expect(last_name.path).to eq "/0/last_name"
+      expect(last_name.path).to eq "0/last_name"
     end
 
     it "has an empty set of items by default" do
@@ -38,9 +38,9 @@ RSpec.shared_examples "a collection of definitions" do |default_params|
 
       expect(all_items.size).to eq 3
       all_paths = all_items.map(&:path)
-      expect(all_paths).to include "/0/0"
-      expect(all_paths).to include "/0/0/first_name"
-      expect(all_paths).to include "/0/0/last_name"
+      expect(all_paths).to include "0/0"
+      expect(all_paths).to include "0/0/first_name"
+      expect(all_paths).to include "0/0/last_name"
     end
   end
 
@@ -84,9 +84,9 @@ RSpec.shared_examples "a collection of definitions" do |default_params|
 
       expect(all_items.size).to eq 3
       all_paths = all_items.map(&:path)
-      expect(all_paths).to include "/0/0"
-      expect(all_paths).to include "/0/0/first_name"
-      expect(all_paths).to include "/0/0/last_name"
+      expect(all_paths).to include "0/0"
+      expect(all_paths).to include "0/0/first_name"
+      expect(all_paths).to include "0/0/last_name"
     end
   end
 

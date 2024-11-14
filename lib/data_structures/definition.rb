@@ -17,7 +17,7 @@ module DataStructures
 
     def path_name = position.to_s
 
-    def path = "#{parent_path}/#{path_name}"
+    def path = parent_path.blank? ? path_name : "#{parent_path}/#{path_name}"
 
     def validate_field(field)= true
 
