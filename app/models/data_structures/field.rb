@@ -58,7 +58,7 @@ module DataStructures
     def create_or_update_child_fields
       return unless definition.respond_to? :items
       definition.items.each_with_index do |field_definition, position|
-        existing_field = container.find_field("#{field_name}/#{field_definition.path_name}")
+        existing_field = container.field("#{field_name}/#{field_definition.path_name}")
         existing_field.present? ? update_existing_field(existing_field, field_definition, position + 1) : create_field_from(field_definition, position + 1)
       end
     end

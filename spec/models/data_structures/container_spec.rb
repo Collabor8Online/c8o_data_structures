@@ -75,26 +75,26 @@ module DataStructures
           template = DataStructures::Definition.load({type: "template", name: "Nested fields", items: [{type: "section", items: [{type: "section", items: [{type: "sub_heading", text: "Hello world"}, {type: "text", caption: "First name"}, {type: "text", caption: "Last name"}]}]}]})
 
           container.create_fields_for template
-          sub_heading_field = container.find_field "1/1/1"
-          first_name_field = container.find_field "1/1/first_name"
-          last_name_field = container.find_field "1/1/last_name"
+          sub_heading_field = container.field "1/1/1"
+          first_name_field = container.field "1/1/first_name"
+          last_name_field = container.field "1/1/last_name"
 
           # Update the definition - swap first name and last name fields, and make last name a mandatory field
           reordered_template = DataStructures::Definition.load({type: "template", name: "Nested fields", items: [{type: "section", items: [{type: "section", items: [{type: "sub_heading", text: "Here are some questions"}, {type: "text", caption: "Last name", required: true}, {type: "text", caption: "First name"}]}]}]})
 
           container.create_fields_for reordered_template
 
-          new_sub_heading_field = container.find_field "1/1/1"
+          new_sub_heading_field = container.field "1/1/1"
           expect(new_sub_heading_field.id).to eq sub_heading_field.id
           expect(new_sub_heading_field.definition).to be_kind_of(DataStructures::Definition::SubHeading)
 
-          new_first_name_field = container.find_field("1/1/first_name")
+          new_first_name_field = container.field "1/1/first_name"
           expect(new_first_name_field.id).to eq first_name_field.id
           expect(new_first_name_field.caption).to eq "First name"
           expect(new_first_name_field.position).to eq 3
           expect(new_first_name_field).to_not be_required
 
-          new_last_name_field = container.find_field("1/1/last_name")
+          new_last_name_field = container.field "1/1/last_name"
           expect(new_last_name_field.id).to eq last_name_field.id
           expect(new_last_name_field.caption).to eq "Last name"
           expect(new_last_name_field.position).to eq 2
@@ -109,14 +109,14 @@ module DataStructures
 
         container.create_fields_for template
 
-        sub_heading = container.find_field "1/1/1"
+        sub_heading = container.field "1/1/1"
         expect(sub_heading.definition).to be_kind_of DataStructures::Definition::SubHeading
 
-        first_name = container.find_field "1/1/first_name"
+        first_name = container.field "1/1/first_name"
         expect(first_name.definition).to be_kind_of DataStructures::Definition::TextField
         expect(first_name.caption).to eq "First name"
 
-        last_name = container.find_field "1/1/last_name"
+        last_name = container.field "1/1/last_name"
         expect(last_name.definition).to be_kind_of DataStructures::Definition::TextField
         expect(last_name.caption).to eq "Last name"
       end
