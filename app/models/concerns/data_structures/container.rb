@@ -13,7 +13,7 @@ module DataStructures
     def create_fields_for definition
       return unless definition.respond_to? :items
       definition.items.each_with_index do |field_definition, position|
-        existing_field = field field_definition.path_name
+        existing_field = field field_definition.reference
         existing_field.present? ? update_existing_field(existing_field, field_definition, position + 1) : create_field_from(field_definition, position + 1)
       end
     end

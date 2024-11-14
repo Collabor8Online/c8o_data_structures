@@ -4,7 +4,7 @@ module DataStructures
   RSpec.describe Field, type: :model do
     let(:alice) { Person.create(first_name: "Alice", last_name: "Aardvark") }
     let(:container) { Form.create(person: alice, name: "My form") }
-    let(:what_is_your_name) { DataStructures::Definition.load({type: "text", caption: "What's your name?", required: true, default: "Alice"}) }
+    let(:what_is_your_name) { DataStructures::Definition.load({type: "text", reference: "name", caption: "What's your name?", required: true, default: "Alice"}) }
 
     describe "#container" do
       subject(:item) { described_class.new container: nil, definition: what_is_your_name }
@@ -26,7 +26,7 @@ module DataStructures
     end
 
     describe "#definition" do
-      subject(:item) { described_class.create! container: container, definition_configuration: {type: "text", caption: "What is your name?", required: true} }
+      subject(:item) { described_class.create! container: container, definition_configuration: {type: "text", reference: "the_question", caption: "What is your name?", required: true} }
 
       it "is loaded from the definition configuration" do
         definition = item.definition
@@ -45,26 +45,26 @@ module DataStructures
         expect(item.definition_configuration["default"]).to eq "Chocolate"
       end
 
-      it "takes its field_name from the definition" do
-        expect(item.field_name).to eq "what_is_your_name"
+      it "takes its field_name from the definition's reference" do
+        expect(item.field_name).to eq "the_question"
       end
 
       it "updates the field_name when the definition is updated" do
-        item.update! definition: DataStructures::Definition::TextField.new(caption: "What is your favourite ice cream?", required: true, default: "Chocolate")
+        item.update! definition: DataStructures::Definition::TextField.new(caption: "What is your favourite ice cream?", reference: "ice_cream", required: true, default: "Chocolate")
 
-        expect(item.field_name).to eq "what_is_your_favourite_ice_cream"
+        expect(item.field_name).to eq "ice_cream"
       end
 
       it "updates the field_name when the definition configuration is updated" do
-        item.update! definition_configuration: {type: "text", caption: "What is your favourite ice cream?", required: true, default: "Chocolate"}
+        item.update! definition_configuration: {type: "text", reference: "ice_cream", caption: "What is your favourite ice cream?", required: true, default: "Chocolate"}
 
-        expect(item.field_name).to eq "what_is_your_favourite_ice_cream"
+        expect(item.field_name).to eq "ice_cream"
       end
     end
 
     describe "#definition - nested Definition" do
       subject(:section) { described_class.create! container: container, definition: definition }
-      let(:definition) { DataStructures::Definition.load({type: "section", items: [{type: "heading", text: "Hello"}, {type: "sub_heading", text: "World"}, {type: "text", caption: "What is your name?"}]}) }
+      let(:definition) { DataStructures::Definition.load({type: "section", reference: "the_section", items: [{type: "heading", reference: "hello", text: "Hello"}, {type: "sub_heading", reference: "world", text: "World"}, {type: "text", reference: "name", caption: "What is your name?"}]}) }
 
       it "creates child fields for a nested definition" do
         expect(section.fields.size).to eq 3
@@ -82,17 +82,17 @@ module DataStructures
         expect(text_field.caption).to eq "What is your name?"
       end
 
-      it "sets the field names for the nested fields" do
-        expect(section.field_name).to eq "1"
+      it "sets the field names for the nested fields based upon the parent field and the definition's reference" do
+        expect(section.field_name).to eq "the_section"
 
         heading = section.fields.first
-        expect(heading.field_name).to eq "1/1"
+        expect(heading.field_name).to eq "the_section/hello"
 
         sub_heading = section.fields.second
-        expect(sub_heading.field_name).to eq "1/2"
+        expect(sub_heading.field_name).to eq "the_section/world"
 
         text_field = section.fields.third
-        expect(text_field.field_name).to eq "1/what_is_your_name"
+        expect(text_field.field_name).to eq "the_section/name"
       end
     end
 
@@ -181,7 +181,16 @@ module DataStructures
       subject(:field) { described_class.create! container: container, definition: what_is_your_name }
 
       it "returns the field_name from the definition" do
-        expect(field.field_name).to eq "what_s_your_name"
+        expect(field.field_name).to eq "name"
+      end
+
+      it "is unique within the container" do
+        expect(field).to be_valid
+
+        duplicate = described_class.create container: container, definition: what_is_your_name
+
+        expect(duplicate).to_not be_valid
+        expect(duplicate.errors).to include(:field_name)
       end
     end
 

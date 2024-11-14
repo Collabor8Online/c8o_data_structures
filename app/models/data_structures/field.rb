@@ -48,9 +48,11 @@ module DataStructures
       item.errors.add :container, :is_not_a_container unless item.container.is_a? DataStructures::Container
     end
 
+    validates :field_name, uniqueness: {scope: :container}
+
     before_save if: :definition_configuration_changed? do |field|
       @definition = nil # force reload of the definition from the configuration hash
-      field.field_name = [parent&.field_name, definition.path_name].compact.join("/")
+      field.field_name = [parent&.field_name, definition.reference].compact.join("/")
     end
 
     after_save :create_or_update_child_fields, if: :saved_change_to_definition_configuration?
