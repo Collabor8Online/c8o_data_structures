@@ -141,6 +141,25 @@ module DataStructures
       end
     end
 
+    describe "#field and #find_all_fields" do
+      subject(:section) { described_class.create! container: container, definition_configuration: {type: "section"} }
+      let!(:first_field) { described_class.create! container: container, parent: section, position: 1, definition_configuration: {type: "text", reference: "the_field", caption: "First question"} }
+      let!(:second_section) { described_class.create! container: container, parent: section, position: 2, definition_configuration: {type: "section"} }
+      let!(:second_field) { described_class.create! container: container, parent: second_section, position: 1, definition_configuration: {type: "text", reference: "the_field", caption: "Second question"} }
+
+      it "finds a field with the given reference as a direct child of this field" do
+        field = section.field "the_field"
+
+        expect(field).to eq first_field
+      end
+
+      it "finds all fields with the given reference as descendants of this field" do
+        fields = section.find_all_fields "the_field"
+
+        expect(fields).to eq [first_field, second_field]
+      end
+    end
+
     describe "#caption" do
       context "when the definition is a field" do
         subject(:field) { described_class.create! container: container, definition: what_is_your_name }

@@ -28,6 +28,10 @@ module DataStructures
 
     def fields = children.order(:position)
 
+    def field(reference) = fields.find { |field| field.definition.reference == reference }
+
+    def find_all_fields(reference) = descendants.select { |field| field.definition.reference == reference }
+
     def caption = definition.respond_to?(:caption) ? definition.caption : ""
 
     def required? = definition.respond_to?(:required?) ? definition.required? : false
