@@ -10,6 +10,8 @@ module DataStructures
 
     def field(field_name) = _fields.find_by field_name: field_name
 
+    def find_all_fields(reference) = _fields.select { |field| field.definition.reference == reference }
+
     def create_fields_for definition
       return unless definition.respond_to? :items
       definition.items.each_with_index do |field_definition, position|
@@ -17,6 +19,8 @@ module DataStructures
         existing_field.present? ? update_existing_field(existing_field, field_definition, position + 1) : create_field_from(field_definition, position + 1)
       end
     end
+
+    private
 
     def update_existing_field(field, field_definition, position) = field.update position: position, definition: field_definition
 

@@ -103,7 +103,7 @@ module DataStructures
       end
     end
 
-    describe "#find_field" do
+    describe "#field" do
       it "finds fields by field_name" do
         template = DataStructures::Definition.load({type: "template", name: "Nested fields", items: [{type: "section", reference: "top_section", items: [{type: "section", reference: "middle_section", items: [{type: "sub_heading", reference: "sub_heading", text: "Hello world"}, {type: "text", reference: "first_name", caption: "First name"}, {type: "text", reference: "last_name", caption: "Last name"}]}]}]})
 
@@ -119,6 +119,24 @@ module DataStructures
         last_name = container.field "top_section/middle_section/last_name"
         expect(last_name.definition).to be_kind_of DataStructures::Definition::TextField
         expect(last_name.caption).to eq "Last name"
+      end
+    end
+
+    describe "#find_all_fields" do
+      it "finds all fields with a given reference" do
+        template = DataStructures::Definition.load({type: "template", name: "Repeating groups", items: [{type: "repeating_group", reference: "group", group_items: [{type: "sub_heading", reference: "sub_heading", text: "Hello world"}, {type: "text", reference: "first_name", caption: "First name"}, {type: "text", reference: "last_name", caption: "Last name"}]}]})
+
+        container.create_fields_for template
+
+        first_name_fields = container.find_all_fields "first_name"
+        expect(first_name_fields.size).to eq 1
+
+        container.field("group").add_group
+
+        puts container.reload._fields.pluck(:field_name)
+
+        first_name_fields = container.find_all_fields "first_name"
+        expect(first_name_fields.size).to eq 2
       end
     end
   end
