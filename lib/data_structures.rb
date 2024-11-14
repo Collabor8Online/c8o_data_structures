@@ -24,5 +24,6 @@ module DataStructures
   Dir[File.join(__dir__, "data_structures/definition", "*.rb")].sort.each { |file| require file }
   require_relative "data_structures/configuration"
   require_relative "data_structures/template_collection"
+  require_relative "data_structures/container"
   @configuration = Configuration.start
 end
