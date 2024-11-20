@@ -25,6 +25,12 @@ module DataStructures
           expect(described_class.new(name: "My template").description).to eq ""
         end
       end
+
+      describe "#path_name" do
+        it "is blank" do
+          expect(described_class.new(name: "My template").path_name).to be_blank
+        end
+      end
     end
   end
 end
