@@ -128,14 +128,12 @@ module DataStructures
 
         container.create_fields_for template
 
-        first_name_fields = container.find_all_fields "first_name"
+        first_name_fields = container.reload.find_all_fields "first_name"
         expect(first_name_fields.size).to eq 1
 
         container.field("group").add_group
 
-        puts container.reload._fields.pluck(:field_name)
-
-        first_name_fields = container.find_all_fields "first_name"
+        first_name_fields = container.reload.find_all_fields "first_name"
         expect(first_name_fields.size).to eq 2
       end
     end
