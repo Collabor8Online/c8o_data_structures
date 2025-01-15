@@ -14,10 +14,12 @@ module DataStructures
 
     def create_fields_for definition
       return unless definition.respond_to? :items
+      # build fields for all items within this definition
       definition.items.each_with_index do |field_definition, position|
-        existing_field = field field_definition.reference
-        existing_field.present? ? update_existing_field(existing_field, field_definition, position + 1) : create_field_from(field_definition, position + 1)
+        (existing_field = field field_definition.reference).present? ? update_existing_field(existing_field, field_definition, position + 1) : create_field_from(field_definition, position + 1)
       end
+      # remove top-level fields that are not present in this definition
+      fields.select { |field| definition.item(field.field_name).nil? }.each(&:destroy)
     end
 
     private

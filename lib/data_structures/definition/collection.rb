@@ -12,6 +12,8 @@ module DataStructures
 
       def all_items = items.flat_map { |item| item.respond_to?(:all_items) ? [item, *item.all_items] : item }
 
+      def item(reference) = items.find { |item| item.reference == reference }
+
       def find(path) = all_items.find { |item| item.path == path }
 
       private

@@ -72,7 +72,7 @@ module DataStructures
 
       context "when there are existing fields stored on the container" do
         it "matches existing fields by their field name and the definition's reference" do
-          template = DataStructures::Definition.load({type: "template", name: "Nested fields", items: [{type: "section", reference: "first_section", items: [{type: "section", reference: "sub_section", items: [{type: "sub_heading", reference: "sub_heading", text: "Hello world"}, {type: "text", reference: "first_name", caption: "First name"}, {type: "text", reference: "last_name", caption: "Last name"}]}]}]})
+          template = DataStructures::Definition.load({type: "template", name: "Top level fields", items: [{type: "section", reference: "first_section", items: [{type: "section", reference: "sub_section", items: [{type: "sub_heading", reference: "sub_heading", text: "Hello world"}, {type: "text", reference: "first_name", caption: "First name"}, {type: "text", reference: "last_name", caption: "Last name"}]}]}]})
 
           container.create_fields_for template
           sub_heading_field = container.field "first_section/sub_section/sub_heading"
@@ -99,6 +99,27 @@ module DataStructures
           expect(new_last_name_field.caption).to eq "Last name"
           expect(new_last_name_field.position).to eq 2
           expect(new_last_name_field).to be_required
+        end
+
+        it "removes top-level fields which are no longer within the definition" do
+          template = DataStructures::Definition.load({type: "template", name: "Top level fields", items: [{type: "text", reference: "first_name", caption: "First name"}, {type: "text", reference: "last_name", caption: "Last name"}]})
+
+          container.create_fields_for template
+          first_name_field = container.field "first_name"
+          expect(container.field("last_name")).to_not be_nil
+
+          # Update the definition - remove the last name field
+          reordered_template = DataStructures::Definition.load({type: "template", name: "Top level field", items: [{type: "text", reference: "first_name", caption: "First name"}]})
+
+          container.create_fields_for reordered_template
+
+          new_first_name_field = container.field "first_name"
+          expect(new_first_name_field.id).to eq first_name_field.id
+          expect(new_first_name_field.caption).to eq "First name"
+          expect(new_first_name_field.position).to eq 1
+          expect(new_first_name_field).to_not be_required
+
+          expect(container.field("last_name")).to be_nil
         end
       end
     end
