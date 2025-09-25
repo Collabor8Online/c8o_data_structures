@@ -1,6 +1,7 @@
 module DataStructures
   class TemplateCollection
     include Plumbing::Actor
+
     async :[], :set, :load
 
     def initialize(configuration)

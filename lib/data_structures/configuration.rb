@@ -1,6 +1,7 @@
 module DataStructures
   class Configuration
     include Plumbing::Actor
+
     async :[], :set, :reset, :register, :class_for, :type_for, :registered_types, :attributes_for
 
     def initialize = reset

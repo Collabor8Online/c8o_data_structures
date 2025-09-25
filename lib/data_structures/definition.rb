@@ -2,6 +2,7 @@ module DataStructures
   class Definition
     include ActiveModel::Model
     include ActiveModel::Attributes
+
     attribute :reference, :string
     attribute :parent_path, :string, default: ""
     attribute :position, :integer, default: 0
